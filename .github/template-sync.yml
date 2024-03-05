@@ -1,0 +1,29 @@
+additional:
+  - "arguments"
+  - "analyzer"
+  - "article.benchmarks"
+  - "describe"
+  - "develop"
+  - "extensions.strings"
+  - "extensions.tasks"
+  - "extensions.test"
+  - "guard"
+  - "healthchecks"
+  - "http.correlation"
+  - "trydispose"
+
+files:
+  - "!**/*"
+  - ".editorconfig"
+  - ".gitignore"
+  - ".github/CODEOWNERS"
+  - ".github/dependabot.yml"
+  - ".github/release-drafter.yml"
+  - ".github/ISSUE_TEMPLATE/**/*"
+  - ".github/PULL_REQUEST_TEMPLATE/**/*"
+  - ".github/workflows/update-license.yml"
+
+  # you probably want to exclude these files:
+  - "!.github/workflows/dependabot-merge.yml"
+  - "!.github/workflows/template-sync.yml"
+  - "!.github/template-sync.yml"
