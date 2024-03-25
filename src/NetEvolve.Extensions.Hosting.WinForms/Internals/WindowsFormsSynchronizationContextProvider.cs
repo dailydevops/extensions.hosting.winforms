@@ -8,11 +8,8 @@ using System.Windows.Forms;
 
 /// <inheritdoc />
 internal sealed class WindowsFormsSynchronizationContextProvider
-    : IWindowsFormsSynchronizationContextProvider,
-        IDisposable
+    : IWindowsFormsSynchronizationContextProvider
 {
-    private bool _disposedValue;
-
     internal WindowsFormsSynchronizationContext Context { get; set; } = default!;
 
     /// <inheritdoc/>
@@ -144,25 +141,5 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             tcs
         );
         return await tcs.Task.WaitAsync(cancellationToken).ConfigureAwait(true);
-    }
-
-    private void Dispose(bool disposing)
-    {
-        if (!_disposedValue)
-        {
-            if (disposing)
-            {
-                Context.Dispose();
-            }
-
-            _disposedValue = true;
-        }
-    }
-
-    public void Dispose()
-    {
-        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 }
