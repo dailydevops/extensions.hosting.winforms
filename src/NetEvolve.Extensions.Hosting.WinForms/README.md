@@ -32,7 +32,7 @@ internal static class Program
 }
 ```
 
-Therefore, you can use the `Microsoft.Extensions.DependencyInjection` to register services and inject them into your forms.
+Therefore, you can use for example the `Microsoft.Extensions.DependencyInjection` to register services and inject them into your forms.
 
 ```csharp
 namespace WinForms;
