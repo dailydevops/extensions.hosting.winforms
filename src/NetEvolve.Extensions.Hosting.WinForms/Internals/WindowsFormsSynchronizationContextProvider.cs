@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/// <inheritdoc />
 internal sealed class WindowsFormsSynchronizationContextProvider
     : IWindowsFormsSynchronizationContextProvider,
         IDisposable

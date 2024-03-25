@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 
+/// <inheritdoc />
 internal sealed class FormularProvider(
     IServiceProvider serviceProvider,
     IWindowsFormsSynchronizationContextProvider synchronizationContext
@@ -93,6 +94,41 @@ internal sealed class FormularProvider(
     }
 
     /// <inheritdoc />
+    public T GetScopedForm<T>()
+        where T : Form
+    {
+        var factory = serviceProvider.GetService<IServiceScopeFactory>();
+        var scope = factory!.CreateScope();
+        try
+        {
+            var form = scope.ServiceProvider.GetService<T>();
+
+            ArgumentNullException.ThrowIfNull(form);
+
+            form.Disposed += (_, _) => scope.Dispose();
+            return form;
+        }
+        catch
+        {
+            scope.Dispose();
+            throw;
+        }
+    }
+
+    /// <inheritdoc />
+    public T GetScopedForm<T>([NotNull] IServiceScope scope)
+        where T : Form
+    {
+        ArgumentNullException.ThrowIfNull(scope);
+
+        var form = scope.ServiceProvider.GetService<T>();
+
+        ArgumentNullException.ThrowIfNull(form);
+
+        return form;
+    }
+
+    /// <inheritdoc />
     public async ValueTask<T> GetScopedFormAsync<T>()
         where T : Form
     {
@@ -126,40 +162,5 @@ internal sealed class FormularProvider(
         {
             _ = _semaphore.Release();
         }
-    }
-
-    /// <inheritdoc />
-    public T GetScopedForm<T>()
-        where T : Form
-    {
-        var factory = serviceProvider.GetService<IServiceScopeFactory>();
-        var scope = factory!.CreateScope();
-        try
-        {
-            var form = scope.ServiceProvider.GetService<T>();
-
-            ArgumentNullException.ThrowIfNull(form);
-
-            form.Disposed += (_, _) => scope.Dispose();
-            return form;
-        }
-        catch
-        {
-            scope.Dispose();
-            throw;
-        }
-    }
-
-    /// <inheritdoc />
-    public T GetScopedForm<T>([NotNull] IServiceScope scope)
-        where T : Form
-    {
-        ArgumentNullException.ThrowIfNull(scope);
-
-        var form = scope.ServiceProvider.GetService<T>();
-
-        ArgumentNullException.ThrowIfNull(form);
-
-        return form;
     }
 }
