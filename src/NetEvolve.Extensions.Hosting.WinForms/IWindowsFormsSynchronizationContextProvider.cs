@@ -13,6 +13,7 @@ public interface IWindowsFormsSynchronizationContextProvider
     /// Invokes the specified action on the Windows Forms synchronization context.
     /// </summary>
     /// <param name="action">The action to be performed.</param>
+    /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
     void Invoke([NotNull] Action action);
 
     /// <summary>
@@ -21,6 +22,7 @@ public interface IWindowsFormsSynchronizationContextProvider
     /// <typeparam name="TResult">The expected return type.</typeparam>
     /// <param name="action">The action to be performed.</param>
     /// <returns>The result of the specified action.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
     [return: MaybeNull]
     TResult Invoke<TResult>([NotNull] Func<TResult> action);
 
@@ -32,6 +34,7 @@ public interface IWindowsFormsSynchronizationContextProvider
     /// <param name="action">The action to be performed.</param>
     /// <param name="input">The specified input.</param>
     /// <returns>The result of the specified action.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
     [return: MaybeNull]
     TResult Invoke<TResult, TInput>([NotNull] Func<TInput, TResult> action, TInput input);
 
@@ -39,7 +42,8 @@ public interface IWindowsFormsSynchronizationContextProvider
     /// Invokes the specified asynchronous action on the Windows Forms synchronization context.
     /// </summary>
     /// <param name="action">The action to be performed.</param>
-    /// <returns></returns>
+    /// <returns>The result of the specified action.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
     ValueTask InvokeAsync([NotNull] Action action);
 
     /// <summary>
@@ -48,6 +52,7 @@ public interface IWindowsFormsSynchronizationContextProvider
     /// <typeparam name="TResult">The expected return type.</typeparam>
     /// <param name="action">The action to be performed.</param>
     /// <returns>The result of the specified action.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
     ValueTask<TResult> InvokeAsync<TResult>([NotNull] Func<TResult> action);
 
     /// <summary>
@@ -58,6 +63,7 @@ public interface IWindowsFormsSynchronizationContextProvider
     /// <param name="action">The action to be performed.</param>
     /// <param name="input">The specified input.</param>
     /// <returns>The result of the specified action.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
     ValueTask<TResult> InvokeAsync<TResult, TInput>(
         [NotNull] Func<TInput, TResult> action,
         TInput input
