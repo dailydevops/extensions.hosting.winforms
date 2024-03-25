@@ -11,7 +11,7 @@ internal sealed class WindowsFormsSynchronizationContextProvider
 {
     private bool _disposedValue;
 
-    public WindowsFormsSynchronizationContext Context { get; internal set; } = default!;
+    internal WindowsFormsSynchronizationContext Context { get; set; } = default!;
 
     /// <inheritdoc/>
     public void Invoke([NotNull] Action action)
