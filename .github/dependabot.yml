@@ -52,3 +52,45 @@ updates:
       submodules:
         patterns:
           - "*"
+
+  # Delete after first release
+
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "build(deps)"
+    labels:
+      - "dependency-nuget"
+    open-pull-requests-limit: 50
+    target-branch: "develop"
+    # groups:
+    #   coverlet:
+    #     patterns:
+    #       - "coverlet*"
+    #   testcontainers:
+    #     patterns:
+    #       - "testcontainers*"
+    #   verify:
+    #     patterns:
+    #       - "verify*"
+    #   xunit:
+    #     patterns:
+    #       - "xunit"
+    #       - "xunit*"
+
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "build(mods)"
+    labels:
+      - "dependency-gitmodule"
+    open-pull-requests-limit: 50
+    target-branch: "develop"
+    groups:
+      submodules:
+        patterns:
+          - "*"

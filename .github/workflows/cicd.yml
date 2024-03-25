@@ -26,5 +26,7 @@ jobs:
       dotnet-logging: ${{ inputs.dotnet-logging }}
       dotnet-version: |
         7.x
-      solution: ###SOLUTION###
+      solution: ./Extensions.Hosting.WinForms.sln
+      runs-on-build: windows-latest
+      runs-on-tests: windows-latest
     secrets: inherit

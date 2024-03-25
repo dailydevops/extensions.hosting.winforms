@@ -1,0 +1,68 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{653A4058-FE7E-4E7D-8F48-CA19874137FD}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.filenesting.json = .filenesting.json
+		.gitignore = .gitignore
+		.gitmodules = .gitmodules
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		Directory.Packages.props = Directory.Packages.props
+		Directory.Solution.props = Directory.Solution.props
+		GitVersion.yml = GitVersion.yml
+		LICENSE = LICENSE
+		new-project.ps1 = new-project.ps1
+		nuget.config = nuget.config
+		README.md = README.md
+		update-solution.ps1 = update-solution.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{63A3C280-DDDF-4BC1-9B8F-AC8D9F949B3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.Extensions.Hosting.WinForms", "src\NetEvolve.Extensions.Hosting.WinForms\NetEvolve.Extensions.Hosting.WinForms.csproj", "{5501B170-5917-4568-9EAC-8853D14238A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8A14AF25-8CF0-494E-9D50-2FAE3CC9A50A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.Extensions.Hosting.WinForms.Tests.Unit", "tests\NetEvolve.Extensions.Hosting.WinForms.Tests.Unit\NetEvolve.Extensions.Hosting.WinForms.Tests.Unit.csproj", "{F7BA85AD-CBD1-4F99-BC28-42DF1253BAE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.Extensions.Hosting.WinForms.Tests.Integration", "tests\NetEvolve.Extensions.Hosting.WinForms.Tests.Integration\NetEvolve.Extensions.Hosting.WinForms.Tests.Integration.csproj", "{22F991BF-06C3-4B35-BCA2-DD61959C187F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEvolve.Extensions.Hosting.WinForms.Tests.Architecture", "tests\NetEvolve.Extensions.Hosting.WinForms.Tests.Architecture\NetEvolve.Extensions.Hosting.WinForms.Tests.Architecture.csproj", "{DF47FD5F-2F7F-470B-98A2-9C5266AA0FBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5501B170-5917-4568-9EAC-8853D14238A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5501B170-5917-4568-9EAC-8853D14238A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5501B170-5917-4568-9EAC-8853D14238A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5501B170-5917-4568-9EAC-8853D14238A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7BA85AD-CBD1-4F99-BC28-42DF1253BAE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7BA85AD-CBD1-4F99-BC28-42DF1253BAE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7BA85AD-CBD1-4F99-BC28-42DF1253BAE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7BA85AD-CBD1-4F99-BC28-42DF1253BAE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22F991BF-06C3-4B35-BCA2-DD61959C187F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22F991BF-06C3-4B35-BCA2-DD61959C187F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22F991BF-06C3-4B35-BCA2-DD61959C187F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22F991BF-06C3-4B35-BCA2-DD61959C187F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF47FD5F-2F7F-470B-98A2-9C5266AA0FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF47FD5F-2F7F-470B-98A2-9C5266AA0FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF47FD5F-2F7F-470B-98A2-9C5266AA0FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF47FD5F-2F7F-470B-98A2-9C5266AA0FBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5501B170-5917-4568-9EAC-8853D14238A1} = {63A3C280-DDDF-4BC1-9B8F-AC8D9F949B3E}
+		{F7BA85AD-CBD1-4F99-BC28-42DF1253BAE8} = {8A14AF25-8CF0-494E-9D50-2FAE3CC9A50A}
+		{22F991BF-06C3-4B35-BCA2-DD61959C187F} = {8A14AF25-8CF0-494E-9D50-2FAE3CC9A50A}
+		{DF47FD5F-2F7F-470B-98A2-9C5266AA0FBD} = {8A14AF25-8CF0-494E-9D50-2FAE3CC9A50A}
+	EndGlobalSection
+EndGlobal

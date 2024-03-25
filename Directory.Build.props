@@ -9,4 +9,8 @@
   <Import Project="$(DirEngineeringSettings)src.build.props" Condition=" '$(IsTestableProject)' != 'true' " />
   <Import Project="$(DirEngineeringSettings)tests.build.props" Condition=" '$(IsTestableProject)' == 'true' " />
 
+  <PropertyGroup>
+    <_TargetFrameworks>net6.0-windows;net7.0-windows;net8.0-windows</_TargetFrameworks>
+  </PropertyGroup>
+
 </Project>

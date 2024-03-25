@@ -1,29 +1,32 @@
 <Project>
-
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
-
   <ItemGroup>
-    <GlobalPackageReference Include="CSharpier.MSBuild" Version="0.26.3" />
+    <GlobalPackageReference Include="CSharpier.MSBuild" Version="0.27.3" />
     <GlobalPackageReference Include="GitVersion.MsBuild" Version="5.12.0" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
     <GlobalPackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
-    <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.8.14" />
-    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="9.16.0.82469" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
+    <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.9.28" />
+    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="9.21.0.86780" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageVersion Include="coverlet.collector" Version="6.0.0" />
-    <PackageVersion Include="coverlet.msbuild" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.1" />
+    <PackageVersion Include="coverlet.msbuild" Version="6.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageVersion Update="Microsoft.Extensions.Hosting" Version="7.0.1" Condition=" '$(TargetFramework)' == 'net7.0-windows' " />
+    <PackageVersion Update="Microsoft.Extensions.Hosting" Version="6.0.1" Condition=" '$(TargetFramework)' == 'net6.0-windows' " />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+    <PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" Condition=" '$(TargetFramework)' == 'net7.0-windows' " />
+    <PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" Condition=" '$(TargetFramework)' == 'net6.0-windows' " />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.0.0" />
+    <PackageVersion Include="NSubstitute" Version="5.1.0" />
+    <PackageVersion Include="TngTech.ArchUnitNET.xUnit" Version="0.10.6" />
     <PackageVersion Include="Verify.Xunit" Version="22.5.0" />
-    <PackageVersion Include="xunit" Version="2.6.2" />
-    <PackageVersion Include="xunit.core" Version="2.6.2" />
-    <PackageVersion Include="xunit.runner.console" Version="2.6.2" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.4" />
+    <PackageVersion Include="xunit" Version="2.7.0" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.7" />
   </ItemGroup>
-
 </Project>
