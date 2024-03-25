@@ -10,8 +10,7 @@ public static class IHostBuilderExtensions
 {
     public static IHostBuilder UseWindowsForms<TStartForm>(
         this IHostBuilder builder,
-        Action<WindowsFormsOptions>? configure = null,
-        Action<IServiceProvider>? additionalServices = null
+        Action<WindowsFormsOptions>? configure = null
     )
         where TStartForm : Form
     {
@@ -23,15 +22,14 @@ public static class IHostBuilderExtensions
                 .AddSingleton<TStartForm>()
                 .AddSingleton(sp => new ApplicationContext(sp.GetRequiredService<TStartForm>()))
                 // Default WindowsForms services
-                .AddWindowsForms(configure, additionalServices)
+                .AddWindowsForms(configure)
         );
     }
 
     public static IHostBuilder UseWindowsForms<TApplicationContext>(
         this IHostBuilder builder,
         Func<IServiceProvider, TApplicationContext>? contextFactory = null,
-        Action<WindowsFormsOptions>? configure = null,
-        Action<IServiceProvider>? additionalServices = null
+        Action<WindowsFormsOptions>? configure = null
     )
         where TApplicationContext : ApplicationContext
     {
@@ -46,15 +44,14 @@ public static class IHostBuilderExtensions
             _ = services
                 .AddSingleton<ApplicationContext, TApplicationContext>()
                 // Default WindowsForms services
-                .AddWindowsForms(configure, additionalServices);
+                .AddWindowsForms(configure);
         });
     }
 
     public static IHostBuilder UseWindowsForms<TApplicationContext, TStartForm>(
         this IHostBuilder builder,
         Func<IServiceProvider, TStartForm, TApplicationContext> contextFactory,
-        Action<WindowsFormsOptions>? configure = null,
-        Action<IServiceProvider>? additionalServices = null
+        Action<WindowsFormsOptions>? configure = null
     )
         where TApplicationContext : ApplicationContext
         where TStartForm : Form
@@ -74,15 +71,14 @@ public static class IHostBuilderExtensions
                     sp.GetRequiredService<TApplicationContext>()
                 )
                 // Default WindowsForms services
-                .AddWindowsForms(configure, additionalServices)
+                .AddWindowsForms(configure)
         );
     }
 
 #if NET7_0
     public static HostApplicationBuilder UseWindowsForms<TStartForm>(
         this HostApplicationBuilder builder,
-        Action<WindowsFormsOptions>? configure = null,
-        Action<IServiceProvider>? additionalServices = null
+        Action<WindowsFormsOptions>? configure = null
     )
         where TStartForm : Form
     {
@@ -92,7 +88,7 @@ public static class IHostBuilderExtensions
             .Services.AddSingleton<TStartForm>()
             .AddSingleton(sp => new ApplicationContext(sp.GetRequiredService<TStartForm>()))
             // Default WindowsForms services
-            .AddWindowsForms(configure, additionalServices);
+            .AddWindowsForms(configure);
 
         return builder;
     }
@@ -100,8 +96,7 @@ public static class IHostBuilderExtensions
     public static HostApplicationBuilder UseWindowsForms<TApplicationContext>(
         this HostApplicationBuilder builder,
         Func<IServiceProvider, TApplicationContext>? contextFactory = null,
-        Action<WindowsFormsOptions>? configure = null,
-        Action<IServiceProvider>? additionalServices = null
+        Action<WindowsFormsOptions>? configure = null
     )
         where TApplicationContext : ApplicationContext
     {
@@ -114,7 +109,7 @@ public static class IHostBuilderExtensions
         _ = services
             .AddSingleton<ApplicationContext>(sp => sp.GetRequiredService<TApplicationContext>())
             // Default WindowsForms services
-            .AddWindowsForms(configure, additionalServices);
+            .AddWindowsForms(configure);
 
         return builder;
     }
@@ -122,8 +117,7 @@ public static class IHostBuilderExtensions
     public static HostApplicationBuilder UseWindowsForms<TApplicationContext, TStartForm>(
         this HostApplicationBuilder builder,
         Func<IServiceProvider, TStartForm, TApplicationContext> contextFactory,
-        Action<WindowsFormsOptions>? configure = null,
-        Action<IServiceProvider>? additionalServices = null
+        Action<WindowsFormsOptions>? configure = null
     )
         where TApplicationContext : ApplicationContext
         where TStartForm : Form
@@ -140,7 +134,7 @@ public static class IHostBuilderExtensions
             })
             .AddSingleton<ApplicationContext>(sp => sp.GetRequiredService<TApplicationContext>())
             // Default WindowsForms services
-            .AddWindowsForms(configure, additionalServices);
+            .AddWindowsForms(configure);
 
         return builder;
     }
@@ -149,8 +143,7 @@ public static class IHostBuilderExtensions
 #if NET8_0_OR_GREATER
     public static IHostApplicationBuilder UseWindowsForms<TStartForm>(
         this IHostApplicationBuilder builder,
-        Action<WindowsFormsOptions>? configure = null,
-        Action<IServiceProvider>? additionalServices = null
+        Action<WindowsFormsOptions>? configure = null
     )
         where TStartForm : Form
     {
@@ -160,7 +153,7 @@ public static class IHostBuilderExtensions
             .Services.AddSingleton<TStartForm>()
             .AddSingleton(sp => new ApplicationContext(sp.GetRequiredService<TStartForm>()))
             // Default WindowsForms services
-            .AddWindowsForms(configure, additionalServices);
+            .AddWindowsForms(configure);
 
         return builder;
     }
@@ -168,8 +161,7 @@ public static class IHostBuilderExtensions
     public static IHostApplicationBuilder UseWindowsForms<TApplicationContext>(
         this IHostApplicationBuilder builder,
         Func<IServiceProvider, TApplicationContext>? contextFactoy = null,
-        Action<WindowsFormsOptions>? configure = null,
-        Action<IServiceProvider>? additionalServices = null
+        Action<WindowsFormsOptions>? configure = null
     )
         where TApplicationContext : ApplicationContext
     {
@@ -182,7 +174,7 @@ public static class IHostBuilderExtensions
         _ = services
             .AddSingleton<ApplicationContext>(sp => sp.GetRequiredService<TApplicationContext>())
             // Default WindowsForms services
-            .AddWindowsForms(configure, additionalServices);
+            .AddWindowsForms(configure);
 
         return builder;
     }
@@ -190,8 +182,7 @@ public static class IHostBuilderExtensions
     public static IHostApplicationBuilder UseWindowsForms<TApplicationContext, TStartForm>(
         this IHostApplicationBuilder builder,
         Func<IServiceProvider, TStartForm, TApplicationContext> contextFactory,
-        Action<WindowsFormsOptions>? configure = null,
-        Action<IServiceProvider>? additionalServices = null
+        Action<WindowsFormsOptions>? configure = null
     )
         where TApplicationContext : ApplicationContext
         where TStartForm : Form
@@ -208,7 +199,7 @@ public static class IHostBuilderExtensions
             })
             .AddSingleton<ApplicationContext>(sp => sp.GetRequiredService<TApplicationContext>())
             // Default WindowsForms services
-            .AddWindowsForms(configure, additionalServices);
+            .AddWindowsForms(configure);
 
         return builder;
     }

@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 internal sealed class FormularProvider(
     IServiceProvider serviceProvider,
-    IWindowsFormsSynchronizationContextProvider synchronizationContextProvider
+    IWindowsFormsSynchronizationContextProvider synchronizationContext
 ) : IFormularProvider, IDisposable
 {
     private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
@@ -41,7 +41,7 @@ internal sealed class FormularProvider(
         _semaphore.Wait();
         try
         {
-            var form = synchronizationContextProvider.Invoke(() => serviceProvider.GetService<T>());
+            var form = synchronizationContext.Invoke(() => serviceProvider.GetService<T>());
             ArgumentNullException.ThrowIfNull(form);
             return form;
         }
@@ -58,7 +58,7 @@ internal sealed class FormularProvider(
         await _semaphore.WaitAsync().ConfigureAwait(false);
         try
         {
-            var form = await synchronizationContextProvider
+            var form = await synchronizationContext
                 .InvokeAsync(() => serviceProvider.GetService<T>())
                 .ConfigureAwait(false);
             ArgumentNullException.ThrowIfNull(form);
@@ -99,7 +99,7 @@ internal sealed class FormularProvider(
         await _semaphore.WaitAsync().ConfigureAwait(false);
         try
         {
-            var form = await synchronizationContextProvider
+            var form = await synchronizationContext
                 .InvokeAsync(GetScopedForm<T>)
                 .ConfigureAwait(false);
             return form;
@@ -117,7 +117,7 @@ internal sealed class FormularProvider(
         await _semaphore.WaitAsync().ConfigureAwait(false);
         try
         {
-            var form = await synchronizationContextProvider
+            var form = await synchronizationContext
                 .InvokeAsync(GetScopedForm<T>, scope)
                 .ConfigureAwait(false);
             return form;

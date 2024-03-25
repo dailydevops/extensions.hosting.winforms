@@ -12,8 +12,7 @@ internal sealed class WindowsFormsHostedService(
     IOptions<WindowsFormsOptions> options,
     IHostApplicationLifetime applicationLifetime,
     IServiceProvider serviceProvider,
-    WindowsFormsSynchronizationContextProvider synchronizationContextProvider,
-    Action<IServiceProvider>? actionServiceProvider
+    WindowsFormsSynchronizationContextProvider synchronizationContextProvider
 ) : IHostedService, IDisposable
 {
     private CancellationTokenRegistration _cancellationTokenRegistration;
@@ -99,12 +98,7 @@ internal sealed class WindowsFormsHostedService(
         synchronizationContextProvider.Context = new WindowsFormsSynchronizationContext();
         SynchronizationContext.SetSynchronizationContext(synchronizationContextProvider.Context);
 
-        var applicationContext =
-            serviceProvider.GetService<ApplicationContext>()
-            ?? throw new InvalidOperationException(
-                "An instance of ApplicationContext is required."
-            );
-        actionServiceProvider?.Invoke(serviceProvider);
+        var applicationContext = serviceProvider.GetRequiredService<ApplicationContext>();
 
         Application.Run(applicationContext);
     }

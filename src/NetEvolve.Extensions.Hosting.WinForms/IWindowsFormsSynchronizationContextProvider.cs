@@ -3,12 +3,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 public interface IWindowsFormsSynchronizationContextProvider
 {
-    WindowsFormsSynchronizationContext Context { get; }
-
     void Invoke([NotNull] Action action);
 
     [return: MaybeNull]

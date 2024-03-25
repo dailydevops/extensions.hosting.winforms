@@ -3,16 +3,16 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 
 internal static class IServiceCollectionExtensions
 {
     public static IServiceCollection AddWindowsForms(
         this IServiceCollection services,
-        Action<WindowsFormsOptions>? configure,
-        Action<IServiceProvider>? additionalServices
+        Action<WindowsFormsOptions>? configure
     )
     {
+        ArgumentNullException.ThrowIfNull(services);
+
         if (configure is not null)
         {
             _ = services.Configure(configure);
@@ -26,20 +26,6 @@ internal static class IServiceCollectionExtensions
             .AddSingleton<IWindowsFormsSynchronizationContextProvider>(sp =>
                 sp.GetRequiredService<WindowsFormsSynchronizationContextProvider>()
             )
-            .AddHostedService(sp =>
-            {
-                var options = sp.GetRequiredService<IOptions<WindowsFormsOptions>>();
-                var lifetime = sp.GetRequiredService<IHostApplicationLifetime>();
-                var synchronizationContext =
-                    sp.GetRequiredService<WindowsFormsSynchronizationContextProvider>();
-
-                return new WindowsFormsHostedService(
-                    options,
-                    lifetime,
-                    sp,
-                    synchronizationContext,
-                    additionalServices
-                );
-            });
+            .AddHostedService<WindowsFormsHostedService>();
     }
 }
