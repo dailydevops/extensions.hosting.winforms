@@ -72,6 +72,7 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             {
                 try
                 {
+                    action();
                     tcs.SetResult();
                 }
                 catch (Exception e)
