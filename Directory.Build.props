@@ -9,4 +9,16 @@
   <Import Project="$(DirEngineeringSettings)src.build.props" Condition=" '$(IsTestableProject)' != 'true' " />
   <Import Project="$(DirEngineeringSettings)tests.build.props" Condition=" '$(IsTestableProject)' == 'true' " />
 
+  <PropertyGroup>
+    <_TargetFrameworks>net6.0-windows;net7.0-windows;net8.0-windows</_TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package settings">
+    <Title>$(MSBuildProjectName)</Title>
+    <Description>.NET Hosting infrastructure for Windows Forms.</Description>
+    <RepositoryUrl>https://github.com/dailydevops/extensions.hosting.winforms.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dailydevops/extensions.hosting.winforms</PackageProjectUrl>
+    <PackageTags>hosting;winforms</PackageTags>
+  </PropertyGroup>
+
 </Project>
