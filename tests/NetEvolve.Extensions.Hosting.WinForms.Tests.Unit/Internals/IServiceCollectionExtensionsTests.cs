@@ -8,20 +8,20 @@ using Xunit;
 public class IServiceCollectionExtensionsTests
 {
     [Fact]
-    public void AddWindowsForms_ServicesNull_ThrowArgumentNullException() =>
+    public void AddWindowsFormsLifetime_ServicesNull_ThrowArgumentNullException() =>
         _ = Assert.Throws<ArgumentNullException>(
             "services",
-            () => IServiceCollectionExtensions.AddWindowsForms(null!, null)
+            () => IServiceCollectionExtensions.AddWindowsFormsLifetime(null!, null)
         );
 
     [Theory]
     [MemberData(nameof(AddWindowsFormsData))]
-    public void AddWindowsForms_ConfigurationNull_Expected(
+    public void AddWindowsFormsLifetime_ConfigurationNull_Expected(
         int expectedServices,
         Action<WindowsFormsOptions>? configure
     )
     {
-        var serviceCollection = new ServiceCollection().AddWindowsForms(configure);
+        var serviceCollection = new ServiceCollection().AddWindowsFormsLifetime(configure);
 
         var services = serviceCollection.BuildServiceProvider();
 

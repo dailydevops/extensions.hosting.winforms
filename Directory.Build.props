@@ -15,6 +15,7 @@
 
   <PropertyGroup Label="Package settings">
     <Title>$(MSBuildProjectName)</Title>
+    <Description>.NET Hosting infrastructure for Windows Forms.</Description>
     <RepositoryUrl>https://github.com/dailydevops/extensions.hosting.winforms.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/dailydevops/extensions.hosting.winforms</PackageProjectUrl>
     <PackageTags>hosting;winforms</PackageTags>

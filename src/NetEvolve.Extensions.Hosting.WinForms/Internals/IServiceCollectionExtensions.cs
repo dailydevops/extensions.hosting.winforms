@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 internal static class IServiceCollectionExtensions
 {
-    public static IServiceCollection AddWindowsForms(
+    public static IServiceCollection AddWindowsFormsLifetime(
         this IServiceCollection services,
         Action<WindowsFormsOptions>? configure
     )
