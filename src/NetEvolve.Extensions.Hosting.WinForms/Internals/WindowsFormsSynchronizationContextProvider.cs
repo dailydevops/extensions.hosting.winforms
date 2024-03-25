@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -62,7 +63,10 @@ internal sealed class WindowsFormsSynchronizationContextProvider
     }
 
     /// <inheritdoc/>
-    public async ValueTask InvokeAsync([NotNull] Action action)
+    public async ValueTask InvokeAsync(
+        [NotNull] Action action,
+        CancellationToken cancellationToken = default
+    )
     {
         ArgumentNullException.ThrowIfNull(action);
 
@@ -83,11 +87,14 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             tcs
         );
 
-        await tcs.Task.ConfigureAwait(true);
+        await tcs.Task.WaitAsync(cancellationToken).ConfigureAwait(true);
     }
 
     /// <inheritdoc/>
-    public async ValueTask<TResult> InvokeAsync<TResult>([NotNull] Func<TResult> action)
+    public async ValueTask<TResult> InvokeAsync<TResult>(
+        [NotNull] Func<TResult> action,
+        CancellationToken cancellationToken = default
+    )
     {
         ArgumentNullException.ThrowIfNull(action);
 
@@ -107,13 +114,14 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             },
             tcs
         );
-        return await tcs.Task.ConfigureAwait(true);
+        return await tcs.Task.WaitAsync(cancellationToken).ConfigureAwait(true);
     }
 
     /// <inheritdoc/>
     public async ValueTask<TResult> InvokeAsync<TResult, TInput>(
         [NotNull] Func<TInput, TResult> action,
-        TInput input
+        TInput input,
+        CancellationToken cancellationToken = default
     )
     {
         ArgumentNullException.ThrowIfNull(action);
@@ -134,7 +142,7 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             },
             tcs
         );
-        return await tcs.Task.ConfigureAwait(true);
+        return await tcs.Task.WaitAsync(cancellationToken).ConfigureAwait(true);
     }
 
     private void Dispose(bool disposing)
