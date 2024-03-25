@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetEvolve.Extensions.Hostin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xample", "xample", "{B241FEA0-8C20-49E2-BD16-36ACBD4A00C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xample.Simple", "xample\Xample.Simple\Xample.Simple.csproj", "{F8CFBE08-1E6F-4CC6-BF56-CE2E72B19A16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xample.Simple", "xample\Xample.Simple\Xample.Simple.csproj", "{F8CFBE08-1E6F-4CC6-BF56-CE2E72B19A16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,7 +62,6 @@ Global
 		{F8CFBE08-1E6F-4CC6-BF56-CE2E72B19A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8CFBE08-1E6F-4CC6-BF56-CE2E72B19A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8CFBE08-1E6F-4CC6-BF56-CE2E72B19A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8CFBE08-1E6F-4CC6-BF56-CE2E72B19A16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
