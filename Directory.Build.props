@@ -13,4 +13,11 @@
     <_TargetFrameworks>net6.0-windows;net7.0-windows;net8.0-windows</_TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup Label="Package settings">
+    <Title>$(MSBuildProjectName)</Title>
+    <RepositoryUrl>https://github.com/dailydevops/extensions.hosting.winforms.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dailydevops/extensions.hosting.winforms</PackageProjectUrl>
+    <PackageTags>hosting;winforms</PackageTags>
+  </PropertyGroup>
+
 </Project>
