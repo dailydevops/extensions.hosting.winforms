@@ -2,21 +2,25 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
+/// <inheritdoc />
+[SuppressMessage(
+    "Usage",
+    "VSTHRD001:Avoid legacy thread switching APIs",
+    Justification = "As designed."
+)]
 internal sealed class WindowsFormsSynchronizationContextProvider
-    : IWindowsFormsSynchronizationContextProvider,
-        IDisposable
+    : IWindowsFormsSynchronizationContextProvider
 {
-    private bool _disposedValue;
-
-    public WindowsFormsSynchronizationContext Context { get; internal set; } = default!;
+    internal SynchronizationContext Context { get; set; } = default!;
 
     /// <inheritdoc/>
     public void Invoke([NotNull] Action action)
     {
         ArgumentNullException.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(Context);
 
         Context.Send(
             delegate
@@ -32,6 +36,7 @@ internal sealed class WindowsFormsSynchronizationContextProvider
     public TResult Invoke<TResult>([NotNull] Func<TResult> action)
     {
         ArgumentNullException.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(Context);
 
         TResult result = default!;
         Context.Send(
@@ -41,6 +46,7 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             },
             null
         );
+
         return result;
     }
 
@@ -49,6 +55,7 @@ internal sealed class WindowsFormsSynchronizationContextProvider
     public TResult Invoke<TResult, TInput>([NotNull] Func<TInput, TResult> action, TInput input)
     {
         ArgumentNullException.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(Context);
 
         TResult result = default!;
         Context.Send(
@@ -58,13 +65,18 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             },
             null
         );
+
         return result;
     }
 
     /// <inheritdoc/>
-    public async ValueTask InvokeAsync([NotNull] Action action)
+    public async ValueTask InvokeAsync(
+        [NotNull] Action action,
+        CancellationToken cancellationToken = default
+    )
     {
         ArgumentNullException.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(Context);
 
         var tcs = new TaskCompletionSource();
         Context.Post(
@@ -72,6 +84,7 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             {
                 try
                 {
+                    action();
                     tcs.SetResult();
                 }
                 catch (Exception e)
@@ -82,13 +95,17 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             tcs
         );
 
-        await tcs.Task.ConfigureAwait(true);
+        await tcs.Task.WaitAsync(cancellationToken).ConfigureAwait(true);
     }
 
     /// <inheritdoc/>
-    public async ValueTask<TResult> InvokeAsync<TResult>([NotNull] Func<TResult> action)
+    public async ValueTask<TResult> InvokeAsync<TResult>(
+        [NotNull] Func<TResult> action,
+        CancellationToken cancellationToken = default
+    )
     {
         ArgumentNullException.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(Context);
 
         var tcs = new TaskCompletionSource<TResult>();
         Context.Post(
@@ -106,16 +123,19 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             },
             tcs
         );
-        return await tcs.Task.ConfigureAwait(true);
+
+        return await tcs.Task.WaitAsync(cancellationToken).ConfigureAwait(true);
     }
 
     /// <inheritdoc/>
     public async ValueTask<TResult> InvokeAsync<TResult, TInput>(
         [NotNull] Func<TInput, TResult> action,
-        TInput input
+        TInput input,
+        CancellationToken cancellationToken = default
     )
     {
         ArgumentNullException.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(Context);
 
         var tcs = new TaskCompletionSource<TResult>();
         Context.Post(
@@ -133,26 +153,7 @@ internal sealed class WindowsFormsSynchronizationContextProvider
             },
             tcs
         );
-        return await tcs.Task.ConfigureAwait(true);
-    }
 
-    private void Dispose(bool disposing)
-    {
-        if (!_disposedValue)
-        {
-            if (disposing)
-            {
-                Context.Dispose();
-            }
-
-            _disposedValue = true;
-        }
-    }
-
-    public void Dispose()
-    {
-        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        Dispose(true);
-        GC.SuppressFinalize(this);
+        return await tcs.Task.WaitAsync(cancellationToken).ConfigureAwait(true);
     }
 }

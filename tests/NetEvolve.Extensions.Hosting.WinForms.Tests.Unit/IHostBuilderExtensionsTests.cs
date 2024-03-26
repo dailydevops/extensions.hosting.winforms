@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.Extensions.Hosting.WinForms.Tests.Unit;
 
 using System;
+using System.Windows.Forms;
 using Microsoft.Extensions.Hosting;
 using NetEvolve.Extensions.Hosting.WinForms.Tests.Unit.Internals;
 using NSubstitute;
@@ -15,7 +16,7 @@ public class IHostBuilderExtensionsTests
 
         _ = Assert.Throws<ArgumentNullException>(
             "builder",
-            () => builder.UseWindowsForms<TestForm>()
+            () => builder.UseWindowsForms<TestFormFine>()
         );
     }
 
@@ -37,7 +38,7 @@ public class IHostBuilderExtensionsTests
 
         _ = Assert.Throws<ArgumentNullException>(
             "builder",
-            () => builder.UseWindowsForms<TestApplicatonContext, TestForm>(null!)
+            () => builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
     }
 
@@ -48,7 +49,7 @@ public class IHostBuilderExtensionsTests
 
         _ = Assert.Throws<ArgumentNullException>(
             "contextFactory",
-            () => builder.UseWindowsForms<TestApplicatonContext, TestForm>(null!)
+            () => builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
     }
 
@@ -60,7 +61,7 @@ public class IHostBuilderExtensionsTests
 
         _ = Assert.Throws<ArgumentNullException>(
             "builder",
-            () => builder!.UseWindowsForms<TestForm>()
+            () => builder!.UseWindowsForms<TestFormFine>()
         );
     }
 
@@ -82,7 +83,7 @@ public class IHostBuilderExtensionsTests
 
         _ = Assert.Throws<ArgumentNullException>(
             "builder",
-            () => builder.UseWindowsForms<TestApplicatonContext, TestForm>(null!)
+            () => builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
     }
 
@@ -93,8 +94,12 @@ public class IHostBuilderExtensionsTests
 
         _ = Assert.Throws<ArgumentNullException>(
             "contextFactory",
-            () => builder.UseWindowsForms<TestApplicatonContext, TestForm>(null!)
+            () => builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
     }
 #endif
+
+#pragma warning disable CA1812
+    private sealed class TestFormFine : Form { }
+#pragma warning restore CA1812
 }

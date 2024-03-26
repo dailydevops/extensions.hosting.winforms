@@ -21,8 +21,10 @@ internal sealed partial class WindowsFormsLifetime(
     private readonly WindowsFormsOptions _options = optionsGetter.Value;
     private readonly ILogger _logger = loggerFactory.CreateLogger("Microsoft.Hosting.Lifetime");
 
+    /// <inheritdoc/>
     public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
+    /// <inheritdoc/>
     public Task WaitForStartAsync(CancellationToken cancellationToken)
     {
         if (!_options.SuppressStatusMessages)
