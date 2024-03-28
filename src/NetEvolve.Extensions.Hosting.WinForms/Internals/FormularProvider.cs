@@ -144,6 +144,7 @@ internal sealed class FormularProvider(
     public async ValueTask<T> GetScopedFormAsync<T>(IServiceScope scope)
         where T : Form
     {
+        ArgumentNullException.ThrowIfNull(scope);
         await _semaphore.WaitAsync().ConfigureAwait(false);
         try
         {

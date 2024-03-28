@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.Extensions.Hosting.WinForms;
 
+using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +51,7 @@ public interface IFormularProvider
     /// </summary>
     /// <typeparam name="T">The specified forms.</typeparam>
     /// <param name="scope">The scope.</param>
+    /// <exception cref="ArgumentNullException">Throws a <see cref="ArgumentNullException"/>, if <paramref name="scope"/> is <see langword="null"/>.</exception>
     /// <returns>The requested form.</returns>
     T GetScopedForm<T>(IServiceScope scope)
         where T : Form;
@@ -67,6 +69,7 @@ public interface IFormularProvider
     /// </summary>
     /// <typeparam name="T">The specified forms.</typeparam>
     /// <param name="scope">The scope.</param>
+    /// <exception cref="ArgumentNullException">Throws a <see cref="ArgumentNullException"/>, if <paramref name="scope"/> is <see langword="null"/>.</exception>
     /// <returns>The requested form.</returns>
     ValueTask<T> GetScopedFormAsync<T>(IServiceScope scope)
         where T : Form;
