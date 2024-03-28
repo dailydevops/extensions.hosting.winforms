@@ -32,9 +32,9 @@ public class IServiceCollectionExtensionsTests
     public static TheoryData<int, Action<WindowsFormsOptions>?> AddWindowsFormsData =>
         new TheoryData<int, Action<WindowsFormsOptions>?>
         {
-            { 4, null },
+            { 5, null },
             {
-                10,
+                11,
                 options =>
                 {
                     options.EnableConsoleShutdown = true;
