@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 
+/// <inheritdoc />
 internal sealed class FormularProvider(
     IServiceProvider serviceProvider,
     IWindowsFormsSynchronizationContextProvider synchronizationContext
@@ -41,9 +42,7 @@ internal sealed class FormularProvider(
         _semaphore.Wait();
         try
         {
-            var form = synchronizationContext.Invoke(() => serviceProvider.GetService<T>());
-            ArgumentNullException.ThrowIfNull(form);
-            return form;
+            return synchronizationContext.Invoke(() => serviceProvider.GetRequiredService<T>())!;
         }
         finally
         {
@@ -58,11 +57,9 @@ internal sealed class FormularProvider(
         await _semaphore.WaitAsync().ConfigureAwait(false);
         try
         {
-            var form = await synchronizationContext
-                .InvokeAsync(() => serviceProvider.GetService<T>())
+            return await synchronizationContext
+                .InvokeAsync(() => serviceProvider.GetRequiredService<T>())!
                 .ConfigureAwait(false);
-            ArgumentNullException.ThrowIfNull(form);
-            return form;
         }
         finally
         {
@@ -73,10 +70,12 @@ internal sealed class FormularProvider(
     /// <inheritdoc />
     public Form GetMainFormular()
     {
-        var context = serviceProvider.GetService<ApplicationContext>();
+        var context = serviceProvider.GetRequiredService<ApplicationContext>();
 
-        ArgumentNullException.ThrowIfNull(context);
-        ArgumentNullException.ThrowIfNull(context.MainForm);
+        if (context.MainForm is null)
+        {
+            throw new InvalidOperationException("The main form is not set.");
+        }
 
         return context.MainForm;
     }
@@ -84,12 +83,43 @@ internal sealed class FormularProvider(
     /// <inheritdoc />
     public ValueTask<Form> GetMainFormularAsync()
     {
-        var context = serviceProvider.GetService<ApplicationContext>();
+        var context = serviceProvider.GetRequiredService<ApplicationContext>();
 
-        ArgumentNullException.ThrowIfNull(context);
-        ArgumentNullException.ThrowIfNull(context.MainForm);
+        if (context.MainForm is null)
+        {
+            throw new InvalidOperationException("The main form is not set.");
+        }
 
         return new ValueTask<Form>(context.MainForm);
+    }
+
+    /// <inheritdoc />
+    public T GetScopedForm<T>()
+        where T : Form
+    {
+        var factory = serviceProvider.GetService<IServiceScopeFactory>();
+        var scope = factory!.CreateScope();
+        try
+        {
+            var form = scope.ServiceProvider.GetRequiredService<T>();
+            form.Disposed += (_, _) => scope.Dispose();
+            return form;
+        }
+        catch
+        {
+            scope.Dispose();
+            throw;
+        }
+    }
+
+    /// <inheritdoc />
+    public T GetScopedForm<T>([NotNull] IServiceScope scope)
+        where T : Form
+    {
+        ArgumentNullException.ThrowIfNull(scope);
+
+        var form = scope.ServiceProvider.GetRequiredService<T>();
+        return form;
     }
 
     /// <inheritdoc />
@@ -114,6 +144,7 @@ internal sealed class FormularProvider(
     public async ValueTask<T> GetScopedFormAsync<T>(IServiceScope scope)
         where T : Form
     {
+        ArgumentNullException.ThrowIfNull(scope);
         await _semaphore.WaitAsync().ConfigureAwait(false);
         try
         {
@@ -126,40 +157,5 @@ internal sealed class FormularProvider(
         {
             _ = _semaphore.Release();
         }
-    }
-
-    /// <inheritdoc />
-    public T GetScopedForm<T>()
-        where T : Form
-    {
-        var factory = serviceProvider.GetService<IServiceScopeFactory>();
-        var scope = factory!.CreateScope();
-        try
-        {
-            var form = scope.ServiceProvider.GetService<T>();
-
-            ArgumentNullException.ThrowIfNull(form);
-
-            form.Disposed += (_, _) => scope.Dispose();
-            return form;
-        }
-        catch
-        {
-            scope.Dispose();
-            throw;
-        }
-    }
-
-    /// <inheritdoc />
-    public T GetScopedForm<T>([NotNull] IServiceScope scope)
-        where T : Form
-    {
-        ArgumentNullException.ThrowIfNull(scope);
-
-        var form = scope.ServiceProvider.GetService<T>();
-
-        ArgumentNullException.ThrowIfNull(form);
-
-        return form;
     }
 }

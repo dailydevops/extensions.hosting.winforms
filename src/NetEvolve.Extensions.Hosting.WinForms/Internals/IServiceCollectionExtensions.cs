@@ -21,6 +21,8 @@ internal static class IServiceCollectionExtensions
         return services
             // Add the WindowsFormsLifetime
             .AddSingleton<IHostLifetime, WindowsFormsLifetime>()
+            // Add the FormularProvider
+            .AddSingleton<IFormularProvider, FormularProvider>()
             // Add the SyncronizationContext provider for WindowsForms
             .AddSingleton<WindowsFormsSynchronizationContextProvider>()
             .AddSingleton<IWindowsFormsSynchronizationContextProvider>(sp =>

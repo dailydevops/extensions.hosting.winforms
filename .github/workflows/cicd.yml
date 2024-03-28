@@ -23,9 +23,12 @@ jobs:
     name: Build & Tests
     uses: dailydevops/pipelines/.github/workflows/cicd-dotnet.yml@main
     with:
+      enableSonarQube: true
       dotnet-logging: ${{ inputs.dotnet-logging }}
       dotnet-version: |
+        6.x
         7.x
+        8.x
       solution: ./Extensions.Hosting.WinForms.sln
       runs-on-build: windows-latest
       runs-on-tests: windows-latest

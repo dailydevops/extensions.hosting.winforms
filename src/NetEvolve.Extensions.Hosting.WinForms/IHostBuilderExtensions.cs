@@ -6,11 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetEvolve.Extensions.Hosting.WinForms.Internals;
 
-#if NET8_0_OR_GREATER
-/// <summary>
-/// Extension methods for <see cref="IHostBuilder"/> or <see cref="IHostApplicationBuilder"/> to configure Windows Forms Lifetime.
-/// </summary>
-#elif NET7_0
+#if NET7_0_OR_GREATER
 /// <summary>
 /// Extension methods for <see cref="IHostBuilder"/> or <see cref="HostApplicationBuilder"/> to configure Windows Forms Lifetime.
 /// </summary>
@@ -68,13 +64,14 @@ public static class IHostBuilderExtensions
         return builder.ConfigureServices(services =>
         {
             services = contextFactory is null
-                ? services.AddSingleton<TApplicationContext>()
-                : services.AddSingleton(sp => contextFactory.Invoke(sp));
+                ? services.AddSingleton<ApplicationContext, TApplicationContext>()
+                : services.AddSingleton<ApplicationContext, TApplicationContext>(sp =>
+                    contextFactory.Invoke(sp)
+                );
 
             _ = services
-                .AddSingleton<ApplicationContext, TApplicationContext>()
-                // Default WindowsForms services
-                .AddWindowsFormsLifetime(configure);
+            // Default WindowsForms services
+            .AddWindowsFormsLifetime(configure);
         });
     }
 
@@ -115,7 +112,7 @@ public static class IHostBuilderExtensions
         );
     }
 
-#if NET7_0
+#if NET7_0_OR_GREATER
     /// <summary>
     /// Enables Windows Forms support, builds and starts the host with the specified <typeparamref name="TStartForm"/>,
     /// then waits for the host to close the <typeparamref name="TStartForm"/> before shutting down.
@@ -160,13 +157,14 @@ public static class IHostBuilderExtensions
         ArgumentNullException.ThrowIfNull(builder);
 
         var services = contextFactory is null
-            ? builder.Services.AddSingleton<TApplicationContext>()
-            : builder.Services.AddSingleton(sp => contextFactory.Invoke(sp));
+            ? builder.Services.AddSingleton<ApplicationContext, TApplicationContext>()
+            : builder.Services.AddSingleton<ApplicationContext, TApplicationContext>(sp =>
+                contextFactory.Invoke(sp)
+            );
 
         _ = services
-            .AddSingleton<ApplicationContext>(sp => sp.GetRequiredService<TApplicationContext>())
-            // Default WindowsForms services
-            .AddWindowsFormsLifetime(configure);
+        // Default WindowsForms services
+        .AddWindowsFormsLifetime(configure);
 
         return builder;
     }
@@ -183,98 +181,6 @@ public static class IHostBuilderExtensions
     /// <returns><see cref="HostApplicationBuilder"/> with enabled Windows Forms support.</returns>
     public static HostApplicationBuilder UseWindowsForms<TApplicationContext, TStartForm>(
         this HostApplicationBuilder builder,
-        Func<IServiceProvider, TStartForm, TApplicationContext> contextFactory,
-        Action<WindowsFormsOptions>? configure = null
-    )
-        where TApplicationContext : ApplicationContext
-        where TStartForm : Form
-    {
-        ArgumentNullException.ThrowIfNull(builder);
-        ArgumentNullException.ThrowIfNull(contextFactory);
-
-        _ = builder
-            .Services.AddSingleton<TStartForm>()
-            .AddSingleton(sp =>
-            {
-                var startForm = sp.GetRequiredService<TStartForm>();
-                return contextFactory(sp, startForm);
-            })
-            .AddSingleton<ApplicationContext>(sp => sp.GetRequiredService<TApplicationContext>())
-            // Default WindowsForms services
-            .AddWindowsFormsLifetime(configure);
-
-        return builder;
-    }
-#endif
-
-#if NET8_0_OR_GREATER
-    /// <summary>
-    /// Enables Windows Forms support, builds and starts the host with the specified <typeparamref name="TStartForm"/>,
-    /// then waits for the host to close the <typeparamref name="TStartForm"/> before shutting down.
-    /// </summary>
-    /// <typeparam name="TStartForm">Form with which the application is to be started.</typeparam>
-    /// <param name="builder">The <see cref="IHostApplicationBuilder"/> to configure.</param>
-    /// <param name="configure">The action to be executed for the configuration of the <see cref="WindowsFormsOptions"/>.</param>
-    /// <returns><see cref="IHostApplicationBuilder"/> with enabled Windows Forms support.</returns>
-    public static IHostApplicationBuilder UseWindowsForms<TStartForm>(
-        this IHostApplicationBuilder builder,
-        Action<WindowsFormsOptions>? configure = null
-    )
-        where TStartForm : Form
-    {
-        ArgumentNullException.ThrowIfNull(builder);
-
-        _ = builder
-            .Services.AddSingleton<TStartForm>()
-            .AddSingleton(sp => new ApplicationContext(sp.GetRequiredService<TStartForm>()))
-            // Default WindowsForms services
-            .AddWindowsFormsLifetime(configure);
-
-        return builder;
-    }
-
-    /// <summary>
-    /// Enables Windows Forms support, builds and starts the host with the specified <typeparamref name="TApplicationContext"/>,
-    /// then waits for the host to close the <typeparamref name="TApplicationContext"/> before shutting down.
-    /// </summary>
-    /// <typeparam name="TApplicationContext"></typeparam>
-    /// <param name="builder">The <see cref="IHostApplicationBuilder"/> to configure.</param>
-    /// <param name="contextFactory">The <see cref="ApplicationContext"/> factory.</param>
-    /// <param name="configure">The action to be executed for the configuration of the <see cref="WindowsFormsOptions"/>.</param>
-    /// <returns><see cref="IHostApplicationBuilder"/> with enabled Windows Forms support.</returns>
-    public static IHostApplicationBuilder UseWindowsForms<TApplicationContext>(
-        this IHostApplicationBuilder builder,
-        Func<IServiceProvider, TApplicationContext>? contextFactory = null,
-        Action<WindowsFormsOptions>? configure = null
-    )
-        where TApplicationContext : ApplicationContext
-    {
-        ArgumentNullException.ThrowIfNull(builder);
-
-        var services = contextFactory is null
-            ? builder.Services.AddSingleton<TApplicationContext>()
-            : builder.Services.AddSingleton(sp => contextFactory(sp));
-
-        _ = services
-            .AddSingleton<ApplicationContext>(sp => sp.GetRequiredService<TApplicationContext>())
-            // Default WindowsForms services
-            .AddWindowsFormsLifetime(configure);
-
-        return builder;
-    }
-
-    /// <summary>
-    /// Enables Windows Forms support, builds and starts the host with the specified <typeparamref name="TApplicationContext"/>,
-    /// which is created by the <paramref name="contextFactory"/> function, then waits for the host to close the <typeparamref name="TApplicationContext"/> before shutting down.
-    /// </summary>
-    /// <typeparam name="TApplicationContext"></typeparam>
-    /// <typeparam name="TStartForm">Form with which the application is to be started.</typeparam>
-    /// <param name="builder">The <see cref="IHostApplicationBuilder"/> to configure.</param>
-    /// <param name="contextFactory">The <see cref="ApplicationContext"/> factory.</param>
-    /// <param name="configure">The action to be executed for the configuration of the <see cref="WindowsFormsOptions"/>.</param>
-    /// <returns><see cref="IHostApplicationBuilder"/> with enabled Windows Forms support.</returns>
-    public static IHostApplicationBuilder UseWindowsForms<TApplicationContext, TStartForm>(
-        this IHostApplicationBuilder builder,
         Func<IServiceProvider, TStartForm, TApplicationContext> contextFactory,
         Action<WindowsFormsOptions>? configure = null
     )
