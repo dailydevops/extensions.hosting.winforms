@@ -272,7 +272,6 @@ public class IHostBuilderExtensionsTests
 #endif
 
 #pragma warning disable CA1812
-#pragma warning disable S2094 // Classes should not be empty
     private sealed class TestApplicationContext : ApplicationContext
     {
         public TestApplicationContext()
@@ -284,7 +283,9 @@ public class IHostBuilderExtensionsTests
             : base(form) { }
     }
 
-    private sealed class TestForm : Form { }
-#pragma warning restore S2094 // Classes should not be empty
+    private sealed class TestForm : Form
+    {
+        public TestForm() => Load += (_, _) => Visible = false;
+    }
 #pragma warning restore CA1812
 }
