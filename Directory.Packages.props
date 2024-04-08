@@ -22,7 +22,7 @@
     <PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" Condition=" '$(TargetFramework)' == 'net7.0-windows' " />
     <PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" Condition=" '$(TargetFramework)' == 'net6.0-windows' " />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.1.0" />
+    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.1.7" />
     <PackageVersion Include="NSubstitute" Version="5.1.0" />
     <PackageVersion Include="TngTech.ArchUnitNET.xUnit" Version="0.10.6" />
     <PackageVersion Include="Verify.Xunit" Version="22.5.0" />
