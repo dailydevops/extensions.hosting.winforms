@@ -20,6 +20,8 @@
     <RepositoryUrl>https://github.com/dailydevops/extensions.hosting.winforms.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/dailydevops/extensions.hosting.winforms</PackageProjectUrl>
     <PackageTags>hosting;winforms</PackageTags>
+
+    <CopyrightYearStart>2024</CopyrightYearStart>
   </PropertyGroup>
 
 </Project>
