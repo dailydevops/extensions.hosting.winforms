@@ -1,5 +1,7 @@
 ﻿namespace NetEvolve.Extensions.Hosting.WinForms;
 
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 /// <summary>
@@ -36,4 +38,14 @@ public sealed class WindowsFormsOptions
     /// The default is <see langword="false"/>.
     /// </summary>
     public bool EnableConsoleShutdown { get; set; }
+
+    /// <summary>
+    /// The default font to use inside the WinForms host. If <see langword="null"/> the system default font is used.
+    /// </summary>
+    public Font? DefaultFont { get; set; }
+
+    /// <summary>
+    /// Optional action to run before the main form is created. Something like a splash screen, login form, etc.
+    /// </summary>
+    public Action<IServiceProvider, IFormularProvider>? PreloadAction { get; set; }
 }
