@@ -84,11 +84,17 @@ internal sealed class WindowsFormsHostedService(
     private void StartUIThread()
     {
         _ = Application.SetHighDpiMode(_options.HighDpiMode);
+        Application.SetCompatibleTextRenderingDefault(_options.CompatibleTextRenderingDefault);
         if (_options.EnableVisualStyles)
         {
             Application.EnableVisualStyles();
         }
-        Application.SetCompatibleTextRenderingDefault(_options.CompatibleTextRenderingDefault);
+
+        if (_options.DefaultFont is not null)
+        {
+            Application.SetDefaultFont(_options.DefaultFont);
+        }
+
         Application.ApplicationExit += OnApplicationExit;
 
         // Disable the auto install of the WindowsFormsSynchronizationContext.
@@ -97,6 +103,15 @@ internal sealed class WindowsFormsHostedService(
         // Create the WindowsFormsSynchronizationContext and set it as the current synchronization context.
         synchronizationContextProvider.Context = new WindowsFormsSynchronizationContext();
         SynchronizationContext.SetSynchronizationContext(synchronizationContextProvider.Context);
+
+        if (_options.PreloadAction is not null)
+        {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var formsProvider = scope.ServiceProvider.GetRequiredService<IFormularProvider>();
+                _options.PreloadAction.Invoke(scope.ServiceProvider, formsProvider);
+            }
+        }
 
         var applicationContext = serviceProvider.GetRequiredService<ApplicationContext>();
 
