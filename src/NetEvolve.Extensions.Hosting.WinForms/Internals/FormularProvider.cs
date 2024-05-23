@@ -42,7 +42,7 @@ internal sealed class FormularProvider(
         _semaphore.Wait();
         try
         {
-            return synchronizationContext.Invoke(() => serviceProvider.GetRequiredService<T>())!;
+            return serviceProvider.GetRequiredService<T>();
         }
         finally
         {
