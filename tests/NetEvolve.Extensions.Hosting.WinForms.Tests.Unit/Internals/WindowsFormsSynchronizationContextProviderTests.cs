@@ -182,7 +182,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = new WindowsFormsSynchronizationContext()
         };
 
         // Act
@@ -264,7 +264,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = new WindowsFormsSynchronizationContext()
         };
 
         // Act
@@ -349,7 +349,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = new WindowsFormsSynchronizationContext()
         };
 
         // Act
