@@ -19,6 +19,9 @@
     <Description>.NET Hosting infrastructure for Windows Forms.</Description>
     <RepositoryUrl>https://github.com/dailydevops/extensions.hosting.winforms.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/dailydevops/extensions.hosting.winforms</PackageProjectUrl>
+
+    <PackageReleaseNotes>$(PackageProjectUrl)/releases</PackageReleaseNotes>
+
     <PackageTags>hosting;winforms</PackageTags>
 
     <CopyrightYearStart>2024</CopyrightYearStart>
