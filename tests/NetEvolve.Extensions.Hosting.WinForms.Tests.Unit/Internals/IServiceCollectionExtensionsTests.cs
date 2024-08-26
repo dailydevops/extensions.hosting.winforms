@@ -39,6 +39,6 @@ public class IServiceCollectionExtensionsTests
                 {
                     options.EnableConsoleShutdown = true;
                 }
-            }
+            },
         };
 }
