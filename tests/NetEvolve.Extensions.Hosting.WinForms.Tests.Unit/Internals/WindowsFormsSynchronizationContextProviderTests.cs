@@ -37,7 +37,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
 
         // Act / Assert
@@ -74,7 +74,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
 
         // Act
@@ -118,7 +118,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
 
         // Act
@@ -161,7 +161,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
 
         // Act
@@ -182,7 +182,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = new WindowsFormsSynchronizationContext()
+            Context = new WindowsFormsSynchronizationContext(),
         };
 
         // Act
@@ -199,7 +199,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
 
         // Act
@@ -243,7 +243,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
 
         // Act
@@ -264,7 +264,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = new WindowsFormsSynchronizationContext()
+            Context = new WindowsFormsSynchronizationContext(),
         };
 
         // Act
@@ -281,7 +281,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
 
         // Act
@@ -325,7 +325,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
 
         // Act
@@ -349,7 +349,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = new WindowsFormsSynchronizationContext()
+            Context = new WindowsFormsSynchronizationContext(),
         };
 
         // Act
@@ -371,7 +371,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
 
         // Act

@@ -18,7 +18,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -37,7 +37,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -55,7 +55,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -74,7 +74,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -92,7 +92,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -111,7 +111,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -129,7 +129,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -148,7 +148,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -166,7 +166,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
         using var scope = serviceProvider.CreateScope();
@@ -186,7 +186,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
         using var scope = serviceProvider.CreateScope();
@@ -205,7 +205,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
         using var scope = serviceProvider.CreateScope();
@@ -225,7 +225,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
         using var scope = serviceProvider.CreateScope();
@@ -246,7 +246,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -267,7 +267,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -285,7 +285,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
@@ -306,7 +306,7 @@ public class FormularProviderTests
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
-            Context = SynchronizationContext.Current!
+            Context = SynchronizationContext.Current!,
         };
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
