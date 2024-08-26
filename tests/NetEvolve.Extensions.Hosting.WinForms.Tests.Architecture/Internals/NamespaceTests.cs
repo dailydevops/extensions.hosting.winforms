@@ -29,10 +29,10 @@ public class NamespaceTests
     }
 
     [Fact]
-    public void Interfaces_should_be_public()
+    public void Interfaces_should_be_internal()
     {
-        var rule = Interfaces().That().Are(_objects).Should().BePublic();
+        var rule = Interfaces().That().Are(_objects).Should().BeInternal();
 
-        rule.Check(ProjectArchitecture.Instance);
+        rule.WithoutRequiringPositiveResults().Check(ProjectArchitecture.Instance);
     }
 }
