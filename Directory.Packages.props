@@ -15,12 +15,12 @@
   <ItemGroup>
     <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
-    <PackageVersion Update="Microsoft.Extensions.Hosting" Version="8.0.1" Condition=" '$(TargetFramework)' == 'net7.0-windows' " />
-    <PackageVersion Update="Microsoft.Extensions.Hosting" Version="8.0.1" Condition=" '$(TargetFramework)' == 'net6.0-windows' " />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
-    <PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" Condition=" '$(TargetFramework)' == 'net7.0-windows' " />
-    <PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" Condition=" '$(TargetFramework)' == 'net6.0-windows' " />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+    <PackageVersion Update="Microsoft.Extensions.Hosting" Version="9.0.0" Condition=" '$(TargetFramework)' == 'net7.0-windows' " />
+    <PackageVersion Update="Microsoft.Extensions.Hosting" Version="9.0.0" Condition=" '$(TargetFramework)' == 'net6.0-windows' " />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
+    <PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" Condition=" '$(TargetFramework)' == 'net7.0-windows' " />
+    <PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" Condition=" '$(TargetFramework)' == 'net6.0-windows' " />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.3.1" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
