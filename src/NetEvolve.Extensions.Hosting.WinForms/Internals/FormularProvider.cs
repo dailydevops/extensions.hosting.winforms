@@ -58,7 +58,7 @@ internal sealed class FormularProvider(
         try
         {
             return await synchronizationContext
-                .InvokeAsync(() => serviceProvider.GetRequiredService<T>())!
+                .InvokeAsync(serviceProvider.GetRequiredService<T>)!
                 .ConfigureAwait(false);
         }
         finally

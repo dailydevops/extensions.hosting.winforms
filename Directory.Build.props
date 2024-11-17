@@ -10,7 +10,7 @@
   <Import Project="$(DirEngineeringSettings)tests.build.props" Condition=" '$(IsTestableProject)' == 'true' " />
 
   <PropertyGroup>
-    <_TargetFrameworks>net6.0-windows;net7.0-windows;net8.0-windows</_TargetFrameworks>
+    <_TargetFrameworks>net8.0-windows;net9.0-windows</_TargetFrameworks>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
