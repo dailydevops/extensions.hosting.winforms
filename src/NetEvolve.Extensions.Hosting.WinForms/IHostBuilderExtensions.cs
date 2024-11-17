@@ -158,8 +158,8 @@ public static class IHostBuilderExtensions
 
         var services = contextFactory is null
             ? builder.Services.AddSingleton<ApplicationContext, TApplicationContext>()
-            : builder.Services.AddSingleton<ApplicationContext, TApplicationContext>(sp =>
-                contextFactory.Invoke(sp)
+            : builder.Services.AddSingleton<ApplicationContext, TApplicationContext>(
+                contextFactory.Invoke
             );
 
         _ = services

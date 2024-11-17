@@ -43,7 +43,7 @@ public class FormularProviderTests
 
         // Act / Assert
         _ = Assert.Throws<InvalidOperationException>(
-            () => formularProvider.GetFormular<TestFormNotRegistered>()
+            formularProvider.GetFormular<TestFormNotRegistered>
         );
     }
 
@@ -117,7 +117,7 @@ public class FormularProviderTests
 
         // Act / Assert
         _ = Assert.Throws<InvalidOperationException>(
-            () => formularProvider.GetScopedForm<TestFormNotRegistered>()
+            formularProvider.GetScopedForm<TestFormNotRegistered>
         );
     }
 
@@ -272,7 +272,7 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(() => formularProvider.GetMainFormular());
+        _ = Assert.Throws<InvalidOperationException>(formularProvider.GetMainFormular);
     }
 
     [Fact]
