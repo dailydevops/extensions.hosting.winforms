@@ -14,8 +14,8 @@
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.5.0.109200" Condition=" '$(BuildingInsideVisualStudio)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
-    <PackageVersion Include="coverlet.collector" Version="6.0.3" />
-    <PackageVersion Include="coverlet.msbuild" Version="6.0.3" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
     <PackageVersion Update="Microsoft.Extensions.Hosting" Version="9.0.1" Condition=" '$(TargetFramework)' == 'net8.0-windows' " />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.1" />
