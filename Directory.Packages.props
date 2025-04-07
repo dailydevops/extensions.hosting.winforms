@@ -16,8 +16,8 @@
   <ItemGroup>
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
-    <PackageVersion Update="Microsoft.Extensions.Hosting" Version="9.0.1" Condition=" '$(TargetFramework)' == 'net8.0-windows' " />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
+    <PackageVersion Update="Microsoft.Extensions.Hosting" Version="9.0.3" Condition=" '$(TargetFramework)' == 'net8.0-windows' " />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.3" />
     <PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.3" Condition=" '$(TargetFramework)' == 'net8.0-windows' " />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
