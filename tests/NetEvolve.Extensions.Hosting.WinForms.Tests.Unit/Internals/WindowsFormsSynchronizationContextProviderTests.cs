@@ -165,12 +165,11 @@ public class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<NotImplementedException>(
-            async () =>
-                await provider.InvokeAsync(() =>
-                {
-                    throw new NotImplementedException();
-                })
+        _ = await Assert.ThrowsAsync<NotImplementedException>(async () =>
+            await provider.InvokeAsync(() =>
+            {
+                throw new NotImplementedException();
+            })
         );
     }
 
@@ -186,8 +185,8 @@ public class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<TaskCanceledException>(
-            async () => await provider.InvokeAsync(() => { }, new CancellationToken(true))
+        _ = await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+            await provider.InvokeAsync(() => { }, new CancellationToken(true))
         );
     }
 
@@ -247,12 +246,11 @@ public class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<NotImplementedException>(
-            async () =>
-                await provider.InvokeAsync<int>(() =>
-                {
-                    throw new NotImplementedException();
-                })
+        _ = await Assert.ThrowsAsync<NotImplementedException>(async () =>
+            await provider.InvokeAsync<int>(() =>
+            {
+                throw new NotImplementedException();
+            })
         );
     }
 
@@ -268,8 +266,8 @@ public class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<TaskCanceledException>(
-            async () => await provider.InvokeAsync(() => 42, new CancellationToken(true))
+        _ = await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+            await provider.InvokeAsync(() => 42, new CancellationToken(true))
         );
     }
 
@@ -329,15 +327,14 @@ public class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<NotImplementedException>(
-            async () =>
-                await provider.InvokeAsync<int, int>(
-                    (int input) =>
-                    {
-                        throw new NotImplementedException();
-                    },
-                    42
-                )
+        _ = await Assert.ThrowsAsync<NotImplementedException>(async () =>
+            await provider.InvokeAsync<int, int>(
+                (int input) =>
+                {
+                    throw new NotImplementedException();
+                },
+                42
+            )
         );
     }
 
@@ -353,13 +350,8 @@ public class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<TaskCanceledException>(
-            async () =>
-                await provider.InvokeAsync(
-                    (int input) => input * 2,
-                    21,
-                    new CancellationToken(true)
-                )
+        _ = await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+            await provider.InvokeAsync((int input) => input * 2, 21, new CancellationToken(true))
         );
     }
 

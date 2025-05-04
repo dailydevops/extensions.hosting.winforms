@@ -79,8 +79,8 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await formularProvider.GetFormularAsync<TestFormNotRegistered>()
+        _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await formularProvider.GetFormularAsync<TestFormNotRegistered>()
         );
     }
 
@@ -153,8 +153,8 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await formularProvider.GetScopedFormAsync<TestFormNotRegistered>()
+        _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await formularProvider.GetScopedFormAsync<TestFormNotRegistered>()
         );
     }
 
@@ -192,8 +192,8 @@ public class FormularProviderTests
         using var scope = serviceProvider.CreateScope();
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(
-            () => formularProvider.GetScopedForm<TestFormNotRegistered>(scope)
+        _ = Assert.Throws<InvalidOperationException>(() =>
+            formularProvider.GetScopedForm<TestFormNotRegistered>(scope)
         );
     }
 
@@ -231,8 +231,8 @@ public class FormularProviderTests
         using var scope = serviceProvider.CreateScope();
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await formularProvider.GetScopedFormAsync<TestFormNotRegistered>(scope)
+        _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await formularProvider.GetScopedFormAsync<TestFormNotRegistered>(scope)
         );
     }
 
@@ -311,8 +311,8 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await formularProvider.GetMainFormularAsync()
+        _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await formularProvider.GetMainFormularAsync()
         );
     }
 

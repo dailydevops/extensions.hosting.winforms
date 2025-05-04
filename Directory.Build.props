@@ -1,26 +1,19 @@
 <Project>
-
   <PropertyGroup>
     <_TargetFrameworks>net8.0-windows;net9.0-windows</_TargetFrameworks>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
-
   <PropertyGroup>
     <!-- Workaround, until https://github.com/GitTools/GitVersion/pull/4206 is released -->
     <GitVersionTargetFramework>net8.0</GitVersionTargetFramework>
   </PropertyGroup>
-
   <PropertyGroup Label="Package settings">
     <Title>$(MSBuildProjectName)</Title>
     <Description>.NET Hosting infrastructure for Windows Forms.</Description>
     <RepositoryUrl>https://github.com/dailydevops/extensions.hosting.winforms.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/dailydevops/extensions.hosting.winforms</PackageProjectUrl>
-
     <PackageReleaseNotes>$(PackageProjectUrl)/releases</PackageReleaseNotes>
-
     <PackageTags>hosting;winforms</PackageTags>
-
     <CopyrightYearStart>2024</CopyrightYearStart>
   </PropertyGroup>
-
 </Project>
