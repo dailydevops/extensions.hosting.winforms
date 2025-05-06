@@ -62,8 +62,7 @@ internal sealed class WindowsFormsHostedService(
         GC.SuppressFinalize(this);
     }
 
-    private void OnApplicationExit(object? sender, EventArgs e) =>
-        applicationLifetime.StopApplication();
+    private void OnApplicationExit(object? sender, EventArgs e) => applicationLifetime.StopApplication();
 
     private void OnApplicationStopping()
     {

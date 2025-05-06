@@ -42,9 +42,7 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(
-            formularProvider.GetFormular<TestFormNotRegistered>
-        );
+        _ = Assert.Throws<InvalidOperationException>(formularProvider.GetFormular<TestFormNotRegistered>);
     }
 
     [Fact]
@@ -116,9 +114,7 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(
-            formularProvider.GetScopedForm<TestFormNotRegistered>
-        );
+        _ = Assert.Throws<InvalidOperationException>(formularProvider.GetScopedForm<TestFormNotRegistered>);
     }
 
     [Fact]
@@ -192,8 +188,7 @@ public class FormularProviderTests
         using var scope = serviceProvider.CreateScope();
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(() =>
-            formularProvider.GetScopedForm<TestFormNotRegistered>(scope)
+        _ = Assert.Throws<InvalidOperationException>(() => formularProvider.GetScopedForm<TestFormNotRegistered>(scope)
         );
     }
 
@@ -261,9 +256,7 @@ public class FormularProviderTests
     public void GetMainFormular_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
-        var services = new ServiceCollection()
-            .AddScoped<TestFormFine>()
-            .AddSingleton(sp => new ApplicationContext());
+        var services = new ServiceCollection().AddScoped<TestFormFine>().AddSingleton(sp => new ApplicationContext());
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {
@@ -300,9 +293,7 @@ public class FormularProviderTests
     public async Task GetMainFormularAsync_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
-        var services = new ServiceCollection()
-            .AddScoped<TestFormFine>()
-            .AddSingleton(sp => new ApplicationContext());
+        var services = new ServiceCollection().AddScoped<TestFormFine>().AddSingleton(sp => new ApplicationContext());
         var serviceProvider = services.BuildServiceProvider();
         var synchronizationContext = new WindowsFormsSynchronizationContextProvider
         {

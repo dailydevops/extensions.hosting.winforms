@@ -69,9 +69,7 @@ internal sealed partial class WindowsFormsLifetime(
 
     private void OnApplicationStarted()
     {
-        Action<ILogger> logAction = _options.EnableConsoleShutdown
-            ? LogStartedWithConsoleShutdown
-            : LogStarted;
+        Action<ILogger> logAction = _options.EnableConsoleShutdown ? LogStartedWithConsoleShutdown : LogStarted;
         logAction(_logger);
 
         LogStartedDetails(_logger, environment.EnvironmentName, environment.ContentRootPath);
@@ -80,11 +78,7 @@ internal sealed partial class WindowsFormsLifetime(
     [LoggerMessage(1, LogLevel.Information, "Application is shutting down...")]
     private static partial void LogShuttingDown(ILogger logger);
 
-    [LoggerMessage(
-        2,
-        LogLevel.Information,
-        "Application started. Close the startup Form to shut down."
-    )]
+    [LoggerMessage(2, LogLevel.Information, "Application started. Close the startup Form to shut down.")]
     private static partial void LogStarted(ILogger logger);
 
     [LoggerMessage(
@@ -102,11 +96,7 @@ internal sealed partial class WindowsFormsLifetime(
             Content root path: {ContentRootPath}
             """
     )]
-    private static partial void LogStartedDetails(
-        ILogger logger,
-        string environmentName,
-        string contentRootPath
-    );
+    private static partial void LogStartedDetails(ILogger logger, string environmentName, string contentRootPath);
 
     private void Dispose(bool disposing)
     {

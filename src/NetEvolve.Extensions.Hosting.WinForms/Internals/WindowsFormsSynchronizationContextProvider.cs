@@ -6,13 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 /// <inheritdoc />
-[SuppressMessage(
-    "Usage",
-    "VSTHRD001:Avoid legacy thread switching APIs",
-    Justification = "As designed."
-)]
-internal sealed class WindowsFormsSynchronizationContextProvider
-    : IWindowsFormsSynchronizationContextProvider
+[SuppressMessage("Usage", "VSTHRD001:Avoid legacy thread switching APIs", Justification = "As designed.")]
+internal sealed class WindowsFormsSynchronizationContextProvider : IWindowsFormsSynchronizationContextProvider
 {
     internal SynchronizationContext Context { get; set; } = default!;
 
@@ -70,10 +65,7 @@ internal sealed class WindowsFormsSynchronizationContextProvider
     }
 
     /// <inheritdoc/>
-    public async ValueTask InvokeAsync(
-        [NotNull] Action action,
-        CancellationToken cancellationToken = default
-    )
+    public async ValueTask InvokeAsync([NotNull] Action action, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(action);
         ArgumentNullException.ThrowIfNull(Context);

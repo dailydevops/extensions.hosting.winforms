@@ -65,9 +65,7 @@ public static class IHostBuilderExtensions
         {
             services = contextFactory is null
                 ? services.AddSingleton<ApplicationContext, TApplicationContext>()
-                : services.AddSingleton<ApplicationContext, TApplicationContext>(sp =>
-                    contextFactory.Invoke(sp)
-                );
+                : services.AddSingleton<ApplicationContext, TApplicationContext>(sp => contextFactory.Invoke(sp));
 
             _ = services
             // Default WindowsForms services
@@ -104,9 +102,7 @@ public static class IHostBuilderExtensions
                     var startForm = sp.GetRequiredService<TStartForm>();
                     return contextFactory(sp, startForm);
                 })
-                .AddSingleton<ApplicationContext>(sp =>
-                    sp.GetRequiredService<TApplicationContext>()
-                )
+                .AddSingleton<ApplicationContext>(sp => sp.GetRequiredService<TApplicationContext>())
                 // Default WindowsForms services
                 .AddWindowsFormsLifetime(configure)
         );
@@ -158,9 +154,7 @@ public static class IHostBuilderExtensions
 
         var services = contextFactory is null
             ? builder.Services.AddSingleton<ApplicationContext, TApplicationContext>()
-            : builder.Services.AddSingleton<ApplicationContext, TApplicationContext>(
-                contextFactory.Invoke
-            );
+            : builder.Services.AddSingleton<ApplicationContext, TApplicationContext>(contextFactory.Invoke);
 
         _ = services
         // Default WindowsForms services

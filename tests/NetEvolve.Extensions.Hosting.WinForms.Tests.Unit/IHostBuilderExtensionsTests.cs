@@ -14,10 +14,7 @@ public class IHostBuilderExtensionsTests
     {
         IHostBuilder builder = null!;
 
-        _ = Assert.Throws<ArgumentNullException>(
-            "builder",
-            () => builder.UseWindowsForms<TestFormFine>()
-        );
+        _ = Assert.Throws<ArgumentNullException>("builder", () => builder.UseWindowsForms<TestFormFine>());
     }
 
     [Fact]
@@ -25,10 +22,7 @@ public class IHostBuilderExtensionsTests
     {
         IHostBuilder builder = null!;
 
-        _ = Assert.Throws<ArgumentNullException>(
-            "builder",
-            () => builder.UseWindowsForms<TestApplicatonContext>()
-        );
+        _ = Assert.Throws<ArgumentNullException>("builder", () => builder.UseWindowsForms<TestApplicatonContext>());
     }
 
     [Fact]
@@ -59,10 +53,7 @@ public class IHostBuilderExtensionsTests
     {
         HostApplicationBuilder builder = null!;
 
-        _ = Assert.Throws<ArgumentNullException>(
-            "builder",
-            () => builder!.UseWindowsForms<TestFormFine>()
-        );
+        _ = Assert.Throws<ArgumentNullException>("builder", () => builder!.UseWindowsForms<TestFormFine>());
     }
 
     [Fact]
@@ -70,10 +61,7 @@ public class IHostBuilderExtensionsTests
     {
         HostApplicationBuilder builder = null!;
 
-        _ = Assert.Throws<ArgumentNullException>(
-            "builder",
-            () => builder.UseWindowsForms<TestApplicatonContext>()
-        );
+        _ = Assert.Throws<ArgumentNullException>("builder", () => builder.UseWindowsForms<TestApplicatonContext>());
     }
 
     [Fact]
