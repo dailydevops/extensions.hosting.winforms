@@ -33,7 +33,7 @@
       Condition=" '$(TargetFramework)' == 'net8.0-windows' "
     />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.5.105" />
+    <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.6.9" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
     <PackageVersion Include="TngTech.ArchUnitNET.xUnit" Version="0.11.4" />
     <PackageVersion Include="Verify.Xunit" Version="22.5.0" />
