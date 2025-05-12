@@ -1,9 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>$(_TargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="coverlet.collector" />
     <PackageReference Include="coverlet.msbuild" />
@@ -13,13 +11,10 @@
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\NetEvolve.Extensions.Hosting.WinForms\NetEvolve.Extensions.Hosting.WinForms.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <AssemblyAttribute Include="NetEvolve.Extensions.XUnit.UnitTestAttribute" />
   </ItemGroup>
-
 </Project>

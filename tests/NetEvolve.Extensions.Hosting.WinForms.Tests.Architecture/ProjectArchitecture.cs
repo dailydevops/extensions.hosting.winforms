@@ -17,9 +17,7 @@ internal static class ProjectArchitecture
 
     private static Architecture LoadArchitecture()
     {
-        var architecture = new ArchLoader()
-            .LoadAssembly(typeof(IFormularProvider).Assembly)
-            .Build();
+        var architecture = new ArchLoader().LoadAssembly(typeof(IFormularProvider).Assembly).Build();
         return architecture;
     }
 }

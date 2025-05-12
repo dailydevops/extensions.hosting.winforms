@@ -35,10 +35,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
-        var provider = new WindowsFormsSynchronizationContextProvider
-        {
-            Context = SynchronizationContext.Current!,
-        };
+        var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act / Assert
         provider.Invoke(() => { });
@@ -72,10 +69,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
-        var provider = new WindowsFormsSynchronizationContextProvider
-        {
-            Context = SynchronizationContext.Current!,
-        };
+        var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
         var result = provider.Invoke(() => 42);
@@ -91,10 +85,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = Assert.Throws<ArgumentNullException>(
-            "action",
-            () => provider.Invoke((Func<int, int>)null!, 42)
-        );
+        _ = Assert.Throws<ArgumentNullException>("action", () => provider.Invoke((Func<int, int>)null!, 42));
     }
 
     [Fact]
@@ -104,10 +95,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = Assert.Throws<ArgumentNullException>(
-            "Context",
-            () => provider.Invoke((int input) => input * 2, 21)
-        );
+        _ = Assert.Throws<ArgumentNullException>("Context", () => provider.Invoke((int input) => input * 2, 21));
     }
 
     [Fact]
@@ -116,10 +104,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
-        var provider = new WindowsFormsSynchronizationContextProvider
-        {
-            Context = SynchronizationContext.Current!,
-        };
+        var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
         var result = provider.Invoke((int input) => input * 2, 21);
@@ -135,10 +120,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<ArgumentNullException>(
-            "action",
-            async () => await provider.InvokeAsync(null!)
-        );
+        _ = await Assert.ThrowsAsync<ArgumentNullException>("action", async () => await provider.InvokeAsync(null!));
     }
 
     [Fact]
@@ -159,18 +141,14 @@ public class WindowsFormsSynchronizationContextProviderTests
     { // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
-        var provider = new WindowsFormsSynchronizationContextProvider
-        {
-            Context = SynchronizationContext.Current!,
-        };
+        var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
-        _ = await Assert.ThrowsAsync<NotImplementedException>(
-            async () =>
-                await provider.InvokeAsync(() =>
-                {
-                    throw new NotImplementedException();
-                })
+        _ = await Assert.ThrowsAsync<NotImplementedException>(async () =>
+            await provider.InvokeAsync(() =>
+            {
+                throw new NotImplementedException();
+            })
         );
     }
 
@@ -186,8 +164,8 @@ public class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<TaskCanceledException>(
-            async () => await provider.InvokeAsync(() => { }, new CancellationToken(true))
+        _ = await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+            await provider.InvokeAsync(() => { }, new CancellationToken(true))
         );
     }
 
@@ -197,10 +175,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
-        var provider = new WindowsFormsSynchronizationContextProvider
-        {
-            Context = SynchronizationContext.Current!,
-        };
+        var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
         await provider.InvokeAsync(() => { });
@@ -241,18 +216,14 @@ public class WindowsFormsSynchronizationContextProviderTests
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
-        var provider = new WindowsFormsSynchronizationContextProvider
-        {
-            Context = SynchronizationContext.Current!,
-        };
+        var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
-        _ = await Assert.ThrowsAsync<NotImplementedException>(
-            async () =>
-                await provider.InvokeAsync<int>(() =>
-                {
-                    throw new NotImplementedException();
-                })
+        _ = await Assert.ThrowsAsync<NotImplementedException>(async () =>
+            await provider.InvokeAsync<int>(() =>
+            {
+                throw new NotImplementedException();
+            })
         );
     }
 
@@ -268,8 +239,8 @@ public class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<TaskCanceledException>(
-            async () => await provider.InvokeAsync(() => 42, new CancellationToken(true))
+        _ = await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+            await provider.InvokeAsync(() => 42, new CancellationToken(true))
         );
     }
 
@@ -279,10 +250,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
-        var provider = new WindowsFormsSynchronizationContextProvider
-        {
-            Context = SynchronizationContext.Current!,
-        };
+        var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
         var result = await provider.InvokeAsync(() => 42);
@@ -323,21 +291,17 @@ public class WindowsFormsSynchronizationContextProviderTests
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
-        var provider = new WindowsFormsSynchronizationContextProvider
-        {
-            Context = SynchronizationContext.Current!,
-        };
+        var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
-        _ = await Assert.ThrowsAsync<NotImplementedException>(
-            async () =>
-                await provider.InvokeAsync<int, int>(
-                    (int input) =>
-                    {
-                        throw new NotImplementedException();
-                    },
-                    42
-                )
+        _ = await Assert.ThrowsAsync<NotImplementedException>(async () =>
+            await provider.InvokeAsync<int, int>(
+                (int input) =>
+                {
+                    throw new NotImplementedException();
+                },
+                42
+            )
         );
     }
 
@@ -353,13 +317,8 @@ public class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<TaskCanceledException>(
-            async () =>
-                await provider.InvokeAsync(
-                    (int input) => input * 2,
-                    21,
-                    new CancellationToken(true)
-                )
+        _ = await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+            await provider.InvokeAsync((int input) => input * 2, 21, new CancellationToken(true))
         );
     }
 
@@ -369,10 +328,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
-        var provider = new WindowsFormsSynchronizationContextProvider
-        {
-            Context = SynchronizationContext.Current!,
-        };
+        var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
         var result = await provider.InvokeAsync((int input) => input * 2, 21);

@@ -64,9 +64,7 @@ public class IHostBuilderExtensionsTests
     [Fact]
     public async Task UseWindowsForms_IHostBuilder_ApplicationContext_Expected()
     {
-        using var host = Host.CreateDefaultBuilder()
-            .UseWindowsForms<TestApplicationContext>()
-            .Build();
+        using var host = Host.CreateDefaultBuilder().UseWindowsForms<TestApplicationContext>().Build();
 
         await host.StartAsync();
 
@@ -115,9 +113,7 @@ public class IHostBuilderExtensionsTests
     public async Task UseWindowsForms_IHostBuilder_AdvancedFactory_Expected()
     {
         using var host = Host.CreateDefaultBuilder()
-            .UseWindowsForms<TestApplicationContext, TestForm>(
-                (sp, form) => new TestApplicationContext(form)
-            )
+            .UseWindowsForms<TestApplicationContext, TestForm>((sp, form) => new TestApplicationContext(form))
             .Build();
 
         await host.StartAsync();
@@ -247,9 +243,7 @@ public class IHostBuilderExtensionsTests
     public async Task UseWindowsForms_HostApplicationBuilder_AdvancedFactory_Expected()
     {
         var builder = Host.CreateApplicationBuilder();
-        _ = builder.UseWindowsForms<TestApplicationContext, TestForm>(
-            (sp, form) => new TestApplicationContext(form)
-        );
+        _ = builder.UseWindowsForms<TestApplicationContext, TestForm>((sp, form) => new TestApplicationContext(form));
         using var host = builder.Build();
 
         await host.StartAsync();

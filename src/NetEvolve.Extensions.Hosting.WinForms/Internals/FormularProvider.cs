@@ -129,9 +129,7 @@ internal sealed class FormularProvider(
         await _semaphore.WaitAsync().ConfigureAwait(false);
         try
         {
-            var form = await synchronizationContext
-                .InvokeAsync(GetScopedForm<T>)
-                .ConfigureAwait(false);
+            var form = await synchronizationContext.InvokeAsync(GetScopedForm<T>).ConfigureAwait(false);
             return form;
         }
         finally
@@ -148,9 +146,7 @@ internal sealed class FormularProvider(
         await _semaphore.WaitAsync().ConfigureAwait(false);
         try
         {
-            var form = await synchronizationContext
-                .InvokeAsync(GetScopedForm<T>, scope)
-                .ConfigureAwait(false);
+            var form = await synchronizationContext.InvokeAsync(GetScopedForm<T>, scope).ConfigureAwait(false);
             return form;
         }
         finally

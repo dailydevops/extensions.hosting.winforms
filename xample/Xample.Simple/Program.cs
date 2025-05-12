@@ -5,9 +5,7 @@ using NetEvolve.Extensions.Hosting.WinForms;
 
 internal static class Program
 {
-    internal static async Task Main() =>
-        await CreateHostBuilder().Build().RunAsync().ConfigureAwait(false);
+    internal static async Task Main() => await CreateHostBuilder().Build().RunAsync().ConfigureAwait(false);
 
-    public static IHostBuilder CreateHostBuilder() =>
-        Host.CreateDefaultBuilder().UseWindowsForms<Form1>();
+    public static IHostBuilder CreateHostBuilder() => Host.CreateDefaultBuilder().UseWindowsForms<Form1>();
 }
