@@ -188,7 +188,8 @@ public class FormularProviderTests
         using var scope = serviceProvider.CreateScope();
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(() => formularProvider.GetScopedForm<TestFormNotRegistered>(scope)
+        _ = Assert.Throws<InvalidOperationException>(() =>
+            formularProvider.GetScopedForm<TestFormNotRegistered>(scope)
         );
     }
 
