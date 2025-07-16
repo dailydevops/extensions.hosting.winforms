@@ -17,23 +17,15 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
-    <PackageVersion
-      Update="Microsoft.Extensions.Hosting"
-      Version="9.0.4"
-      Condition=" '$(TargetFramework)' == 'net8.0-windows' "
-    />
+    <PackageVersion Update="Microsoft.Extensions.Hosting" Version="9.0.4" Condition=" '$(TargetFramework)' == 'net8.0-windows' " />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.4" />
-    <PackageVersion
-      Update="Microsoft.Extensions.Hosting.Abstractions"
-      Version="9.0.4"
-      Condition=" '$(TargetFramework)' == 'net8.0-windows' "
-    />
+    <PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.4" Condition=" '$(TargetFramework)' == 'net8.0-windows' " />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="NetEvolve.Extensions.XUnit" Version="2.6.9" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
     <PackageVersion Include="TngTech.ArchUnitNET.xUnit" Version="0.11.4" />
     <PackageVersion Include="Verify.Xunit" Version="22.5.0" />
     <PackageVersion Include="xunit" Version="2.9.3" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.3" />
   </ItemGroup>
 </Project>
