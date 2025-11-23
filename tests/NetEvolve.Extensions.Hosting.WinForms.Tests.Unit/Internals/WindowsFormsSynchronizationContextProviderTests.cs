@@ -5,8 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NetEvolve.Extensions.Hosting.WinForms.Internals;
-using TUnit.Assertions.Extensions;
-using TUnit.Core;
 
 public partial class WindowsFormsSynchronizationContextProviderTests
 {
@@ -17,8 +15,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = Assert.Throws<ArgumentNullException>(() => provider.Invoke(null!));
-        Assert.That(exception.ParamName).IsEqualTo("action");
+        var exception = await Assert.Throws<ArgumentNullException>(() => provider.Invoke(null!));
+        await Assert.That(exception.ParamName).IsEqualTo("action");
     }
 
     [Test]
@@ -28,8 +26,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = Assert.Throws<ArgumentNullException>(() => provider.Invoke(() => { }));
-        Assert.That(exception.ParamName).IsEqualTo("Context");
+        var exception = await Assert.Throws<ArgumentNullException>(() => provider.Invoke(() => { }));
+        await Assert.That(exception.ParamName).IsEqualTo("Context");
     }
 
     [Test]
@@ -53,8 +51,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = Assert.Throws<ArgumentNullException>(() => provider.Invoke((Func<int>)null!));
-        Assert.That(exception.ParamName).IsEqualTo("action");
+        var exception = await Assert.Throws<ArgumentNullException>(() => provider.Invoke((Func<int>)null!));
+        await Assert.That(exception.ParamName).IsEqualTo("action");
     }
 
     [Test]
@@ -64,8 +62,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = Assert.Throws<ArgumentNullException>(() => provider.Invoke(() => 42));
-        Assert.That(exception.ParamName).IsEqualTo("Context");
+        var exception = await Assert.Throws<ArgumentNullException>(() => provider.Invoke(() => 42));
+        await Assert.That(exception.ParamName).IsEqualTo("Context");
     }
 
     [Test]
@@ -80,7 +78,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var result = provider.Invoke(() => 42);
 
         // Assert
-        Assert.That(result).IsEqualTo(42);
+        await Assert.That(result).IsEqualTo(42);
     }
 
     [Test]
@@ -90,8 +88,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = Assert.Throws<ArgumentNullException>(() => provider.Invoke((Func<int, int>)null!, 42));
-        Assert.That(exception.ParamName).IsEqualTo("action");
+        var exception = await Assert.Throws<ArgumentNullException>(() => provider.Invoke((Func<int, int>)null!, 42));
+        await Assert.That(exception.ParamName).IsEqualTo("action");
     }
 
     [Test]
@@ -101,8 +99,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = Assert.Throws<ArgumentNullException>(() => provider.Invoke((int input) => input * 2, 21));
-        Assert.That(exception.ParamName).IsEqualTo("Context");
+        var exception = await Assert.Throws<ArgumentNullException>(() => provider.Invoke((int input) => input * 2, 21));
+        await Assert.That(exception.ParamName).IsEqualTo("Context");
     }
 
     [Test]
@@ -117,7 +115,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var result = provider.Invoke((int input) => input * 2, 21);
 
         // Assert
-        Assert.That(result).IsEqualTo(42);
+        await Assert.That(result).IsEqualTo(42);
     }
 
     [Test]
@@ -128,7 +126,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
 
         // Act / Assert
         var exception = await Assert.ThrowsAsync<ArgumentNullException>(async () => await provider.InvokeAsync(null!));
-        Assert.That(exception.ParamName).IsEqualTo("action");
+        await Assert.That(exception.ParamName).IsEqualTo("action");
     }
 
     [Test]
@@ -138,10 +136,10 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = await Assert.ThrowsAsync<ArgumentNullException>(
-            async () => await provider.InvokeAsync(() => { })
+        var exception = await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            await provider.InvokeAsync(() => { })
         );
-        Assert.That(exception.ParamName).IsEqualTo("Context");
+        await Assert.That(exception.ParamName).IsEqualTo("Context");
     }
 
     [Test]
@@ -199,10 +197,10 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = await Assert.ThrowsAsync<ArgumentNullException>(
-            async () => await provider.InvokeAsync((Func<int>)null!)
+        var exception = await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            await provider.InvokeAsync((Func<int>)null!)
         );
-        Assert.That(exception.ParamName).IsEqualTo("action"");
+        await Assert.That(exception.ParamName).IsEqualTo("action");
     }
 
     [Test]
@@ -212,10 +210,10 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = await Assert.ThrowsAsync<ArgumentNullException>(
-            async () => await provider.InvokeAsync(() => 42)
+        var exception = await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            await provider.InvokeAsync(() => 42)
         );
-        Assert.That(exception.ParamName).IsEqualTo("Context"");
+        await Assert.That(exception.ParamName).IsEqualTo("Context");
     }
 
     [Test]
@@ -264,7 +262,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var result = await provider.InvokeAsync(() => 42);
 
         // Assert
-        Assert.That(result).IsEqualTo(42);
+        await Assert.That(result).IsEqualTo(42);
     }
 
     [Test]
@@ -274,10 +272,10 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = await Assert.ThrowsAsync<ArgumentNullException>(
-            async () => await provider.InvokeAsync((Func<int, int>)null!, 42)
+        var exception = await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            await provider.InvokeAsync((Func<int, int>)null!, 42)
         );
-        Assert.That(exception.ParamName).IsEqualTo("action"");
+        await Assert.That(exception.ParamName).IsEqualTo("action");
     }
 
     [Test]
@@ -287,10 +285,10 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        var exception = await Assert.ThrowsAsync<ArgumentNullException>(
-            async () => await provider.InvokeAsync((int input) => input * 2, 21)
+        var exception = await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            await provider.InvokeAsync((int input) => input * 2, 21)
         );
-        Assert.That(exception.ParamName).IsEqualTo("Context"");
+        await Assert.That(exception.ParamName).IsEqualTo("Context");
     }
 
     [Test]
@@ -342,6 +340,6 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var result = await provider.InvokeAsync((int input) => input * 2, 21);
 
         // Assert
-        Assert.That(result).IsEqualTo(42);
+        await Assert.That(result).IsEqualTo(42);
     }
 }

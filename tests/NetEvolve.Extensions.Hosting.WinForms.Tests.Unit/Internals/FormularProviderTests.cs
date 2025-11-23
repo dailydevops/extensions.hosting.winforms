@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.Hosting.WinForms.Internals;
-using TUnit.Assertions.Extensions;
-using TUnit.Core;
 
 public partial class FormularProviderTests
 {
@@ -27,7 +25,7 @@ public partial class FormularProviderTests
         using var resultForm = formularProvider.GetFormular<TestFormFine>();
 
         // Assert
-        Assert.That(resultForm).IsNotNull();
+        await Assert.That(resultForm).IsNotNull();
     }
 
     [Test]
@@ -43,7 +41,7 @@ public partial class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        Assert.Throws<InvalidOperationException>(formularProvider.GetFormular<TestFormNotRegistered>);
+        await Assert.Throws<InvalidOperationException>(formularProvider.GetFormular<TestFormNotRegistered>);
     }
 
     [Test]
@@ -62,7 +60,7 @@ public partial class FormularProviderTests
         using var resultForm = await formularProvider.GetFormularAsync<TestFormFine>();
 
         // Assert
-        Assert.That(resultForm).IsNotNull();
+        await Assert.That(resultForm).IsNotNull();
     }
 
     [Test]
@@ -99,7 +97,7 @@ public partial class FormularProviderTests
         using var resultForm = formularProvider.GetScopedForm<TestFormFine>();
 
         // Assert
-        Assert.That(resultForm).IsNotNull();
+        await Assert.That(resultForm).IsNotNull();
     }
 
     [Test]
@@ -115,7 +113,7 @@ public partial class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        Assert.Throws<InvalidOperationException>(formularProvider.GetScopedForm<TestFormNotRegistered>);
+        await Assert.Throws<InvalidOperationException>(formularProvider.GetScopedForm<TestFormNotRegistered>);
     }
 
     [Test]
@@ -134,7 +132,7 @@ public partial class FormularProviderTests
         using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>();
 
         // Assert
-        Assert.That(resultForm).IsNotNull();
+        await Assert.That(resultForm).IsNotNull();
     }
 
     [Test]
@@ -172,7 +170,7 @@ public partial class FormularProviderTests
         using var resultForm = formularProvider.GetScopedForm<TestFormFine>(scope);
 
         // Assert
-        Assert.That(resultForm).IsNotNull();
+        await Assert.That(resultForm).IsNotNull();
     }
 
     [Test]
@@ -189,7 +187,9 @@ public partial class FormularProviderTests
         using var scope = serviceProvider.CreateScope();
 
         // Act / Assert
-        Assert.Throws<InvalidOperationException>(() => formularProvider.GetScopedForm<TestFormNotRegistered>(scope));
+        await Assert.Throws<InvalidOperationException>(() =>
+            formularProvider.GetScopedForm<TestFormNotRegistered>(scope)
+        );
     }
 
     [Test]
@@ -209,7 +209,7 @@ public partial class FormularProviderTests
         using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>(scope);
 
         // Assert
-        Assert.That(resultForm).IsNotNull();
+        await Assert.That(resultForm).IsNotNull();
     }
 
     [Test]
@@ -249,7 +249,7 @@ public partial class FormularProviderTests
         using var resultForm = formularProvider.GetMainFormular();
 
         // Assert
-        Assert.That(resultForm).IsNotNull();
+        await Assert.That(resultForm).IsNotNull();
     }
 
     [Test]
@@ -265,7 +265,7 @@ public partial class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        Assert.Throws<InvalidOperationException>(formularProvider.GetMainFormular);
+        await Assert.Throws<InvalidOperationException>(formularProvider.GetMainFormular);
     }
 
     [Test]
@@ -286,7 +286,7 @@ public partial class FormularProviderTests
         using var resultForm = await formularProvider.GetMainFormularAsync();
 
         // Assert
-        Assert.That(resultForm).IsNotNull();
+        await Assert.That(resultForm).IsNotNull();
     }
 
     [Test]

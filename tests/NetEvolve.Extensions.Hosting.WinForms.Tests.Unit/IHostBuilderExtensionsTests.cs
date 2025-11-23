@@ -5,8 +5,6 @@ using System.Windows.Forms;
 using Microsoft.Extensions.Hosting;
 using NetEvolve.Extensions.Hosting.WinForms.Tests.Unit.Internals;
 using NSubstitute;
-using TUnit.Assertions.Extensions;
-using TUnit.Core;
 
 public partial class IHostBuilderExtensionsTests
 {
@@ -15,8 +13,8 @@ public partial class IHostBuilderExtensionsTests
     {
         IHostBuilder builder = null!;
 
-        var exception = Assert.Throws<ArgumentNullException>(() => builder.UseWindowsForms<TestFormFine>());
-        Assert.That(exception.ParamName).IsEqualTo("builder");
+        var exception = await Assert.Throws<ArgumentNullException>(() => builder.UseWindowsForms<TestFormFine>());
+        await Assert.That(exception.ParamName).IsEqualTo("builder");
     }
 
     [Test]
@@ -24,8 +22,10 @@ public partial class IHostBuilderExtensionsTests
     {
         IHostBuilder builder = null!;
 
-        var exception = Assert.Throws<ArgumentNullException>(() => builder.UseWindowsForms<TestApplicatonContext>());
-        Assert.That(exception.ParamName).IsEqualTo("builder");
+        var exception = await Assert.Throws<ArgumentNullException>(() =>
+            builder.UseWindowsForms<TestApplicatonContext>()
+        );
+        await Assert.That(exception.ParamName).IsEqualTo("builder");
     }
 
     [Test]
@@ -33,10 +33,10 @@ public partial class IHostBuilderExtensionsTests
     {
         IHostBuilder builder = null!;
 
-        var exception = Assert.Throws<ArgumentNullException>(() =>
+        var exception = await Assert.Throws<ArgumentNullException>(() =>
             builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
-        Assert.That(exception.ParamName).IsEqualTo("builder");
+        await Assert.That(exception.ParamName).IsEqualTo("builder");
     }
 
     [Test]
@@ -44,10 +44,10 @@ public partial class IHostBuilderExtensionsTests
     {
         var builder = Substitute.For<IHostBuilder>();
 
-        var exception = Assert.Throws<ArgumentNullException>(() =>
+        var exception = await Assert.Throws<ArgumentNullException>(() =>
             builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
-        Assert.That(exception.ParamName).IsEqualTo("contextFactory");
+        await Assert.That(exception.ParamName).IsEqualTo("contextFactory");
     }
 
 #if NET7_0_OR_GREATER
@@ -56,8 +56,8 @@ public partial class IHostBuilderExtensionsTests
     {
         HostApplicationBuilder builder = null!;
 
-        var exception = Assert.Throws<ArgumentNullException>(() => builder!.UseWindowsForms<TestFormFine>());
-        Assert.That(exception.ParamName).IsEqualTo("builder");
+        var exception = await Assert.Throws<ArgumentNullException>(() => builder!.UseWindowsForms<TestFormFine>());
+        await Assert.That(exception.ParamName).IsEqualTo("builder");
     }
 
     [Test]
@@ -65,8 +65,10 @@ public partial class IHostBuilderExtensionsTests
     {
         HostApplicationBuilder builder = null!;
 
-        var exception = Assert.Throws<ArgumentNullException>(() => builder.UseWindowsForms<TestApplicatonContext>());
-        Assert.That(exception.ParamName).IsEqualTo("builder");
+        var exception = await Assert.Throws<ArgumentNullException>(() =>
+            builder.UseWindowsForms<TestApplicatonContext>()
+        );
+        await Assert.That(exception.ParamName).IsEqualTo("builder");
     }
 
     [Test]
@@ -74,10 +76,10 @@ public partial class IHostBuilderExtensionsTests
     {
         HostApplicationBuilder builder = null!;
 
-        var exception = Assert.Throws<ArgumentNullException>(() =>
+        var exception = await Assert.Throws<ArgumentNullException>(() =>
             builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
-        Assert.That(exception.ParamName).IsEqualTo("builder");
+        await Assert.That(exception.ParamName).IsEqualTo("builder");
     }
 
     [Test]
@@ -85,10 +87,10 @@ public partial class IHostBuilderExtensionsTests
     {
         var builder = new HostApplicationBuilder();
 
-        var exception = Assert.Throws<ArgumentNullException>(() =>
+        var exception = await Assert.Throws<ArgumentNullException>(() =>
             builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
-        Assert.That(exception.ParamName).IsEqualTo("contextFactory");
+        await Assert.That(exception.ParamName).IsEqualTo("contextFactory");
     }
 #endif
 

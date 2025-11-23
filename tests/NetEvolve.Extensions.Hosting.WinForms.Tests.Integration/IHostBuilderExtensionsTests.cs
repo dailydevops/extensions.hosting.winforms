@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TUnit.Assertions.Extensions;
-using TUnit.Core;
 
 public partial class IHostBuilderExtensionsTests
 {
@@ -27,8 +25,8 @@ public partial class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.That(mainForm).IsNotNull();
-        Assert.That(mainForm).IsTypeOf<TestForm>();
+        await Assert.That(mainForm).IsNotNull();
+        await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
@@ -56,8 +54,8 @@ public partial class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.That(mainForm).IsNotNull();
-        Assert.That(mainForm).IsTypeOf<TestForm>();
+        await Assert.That(mainForm).IsNotNull();
+        await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
@@ -79,8 +77,8 @@ public partial class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.That(mainForm).IsNotNull();
-        Assert.That(mainForm).IsTypeOf<TestForm>();
+        await Assert.That(mainForm).IsNotNull();
+        await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
@@ -104,8 +102,8 @@ public partial class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.That(mainForm).IsNotNull();
-        Assert.That(mainForm).IsTypeOf<TestForm>();
+        await Assert.That(mainForm).IsNotNull();
+        await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
@@ -129,8 +127,8 @@ public partial class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.That(mainForm).IsNotNull();
-        Assert.That(mainForm).IsTypeOf<TestForm>();
+        await Assert.That(mainForm).IsNotNull();
+        await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
@@ -155,8 +153,8 @@ public partial class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.That(mainForm).IsNotNull();
-        Assert.That(mainForm).IsTypeOf<TestForm>();
+        await Assert.That(mainForm).IsNotNull();
+        await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
@@ -184,8 +182,8 @@ public partial class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.That(mainForm).IsNotNull();
-        Assert.That(mainForm).IsTypeOf<TestForm>();
+        await Assert.That(mainForm).IsNotNull();
+        await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
@@ -209,8 +207,8 @@ public partial class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.That(mainForm).IsNotNull();
-        Assert.That(mainForm).IsTypeOf<TestForm>();
+        await Assert.That(mainForm).IsNotNull();
+        await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
@@ -234,8 +232,8 @@ public partial class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.That(mainForm).IsNotNull();
-        Assert.That(mainForm).IsTypeOf<TestForm>();
+        await Assert.That(mainForm).IsNotNull();
+        await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
@@ -259,8 +257,8 @@ public partial class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.That(mainForm).IsNotNull();
-        Assert.That(mainForm).IsTypeOf<TestForm>();
+        await Assert.That(mainForm).IsNotNull();
+        await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }

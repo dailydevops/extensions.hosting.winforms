@@ -3,18 +3,16 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.Hosting.WinForms.Internals;
-using TUnit.Assertions.Extensions;
-using TUnit.Core;
 
 public partial class IServiceCollectionExtensionsTests
 {
     [Test]
     public void AddWindowsFormsLifetime_ServicesNull_ThrowArgumentNullException()
     {
-        var exception = Assert.Throws<ArgumentNullException>(() =>
+        var exception = await Assert.Throws<ArgumentNullException>(() =>
             IServiceCollectionExtensions.AddWindowsFormsLifetime(null!, null)
         );
-        Assert.That(exception.ParamName).IsEqualTo("services");
+        await Assert.That(exception.ParamName).IsEqualTo("services");
     }
 
     [Test]
@@ -32,7 +30,7 @@ public partial class IServiceCollectionExtensionsTests
 
         var services = serviceCollection.BuildServiceProvider();
 
-        Assert.That(services).IsNotNull();
-        Assert.That(serviceCollection.Count).IsEqualTo(expectedServices);
+        await Assert.That(services).IsNotNull();
+        await Assert.That(serviceCollection.Count).IsEqualTo(expectedServices);
     }
 }

@@ -3,7 +3,6 @@
 using ArchUnitNET.Domain;
 using ArchUnitNET.TUnit;
 using NetEvolve.Extensions.Hosting.WinForms.Tests.Architecture;
-using TUnit.Core;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
 public partial class NamespaceTests
