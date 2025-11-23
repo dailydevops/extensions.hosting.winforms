@@ -1,18 +1,18 @@
 ﻿namespace NetEvolve.Extensions.Hosting.WinForms.Tests.Architecture.Internals;
 
 using ArchUnitNET.Domain;
-using ArchUnitNET.xUnit;
+using ArchUnitNET.TUnit;
 using NetEvolve.Extensions.Hosting.WinForms.Tests.Architecture;
-using Xunit;
+using TUnit.Core;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
-public class NamespaceTests
+public partial class NamespaceTests
 {
     private static readonly IObjectProvider<IType> _objects = Types()
         .That()
         .ResideInNamespace("NetEvolve.Extensions.Hosting.WinForms.Internals");
 
-    [Fact]
+    [Test]
     public void Classes_should_be_Internal()
     {
         var rule = Classes().That().Are(_objects).Should().BeInternal();
@@ -20,7 +20,7 @@ public class NamespaceTests
         rule.Check(ProjectArchitecture.Instance);
     }
 
-    [Fact]
+    [Test]
     public void Classes_should_be_Sealed_Or_Static()
     {
         var rule = Classes().That().Are(_objects).Should().BeSealed();
@@ -28,7 +28,7 @@ public class NamespaceTests
         rule.Check(ProjectArchitecture.Instance);
     }
 
-    [Fact]
+    [Test]
     public void Interfaces_should_be_internal()
     {
         var rule = Interfaces().That().Are(_objects).Should().BeInternal();

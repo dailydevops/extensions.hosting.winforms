@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.Hosting.WinForms.Internals;
-using Xunit;
+using TUnit.Assertions.Extensions;
+using TUnit.Core;
 
-public class FormularProviderTests
+public partial class FormularProviderTests
 {
-    [Fact]
+    [Test]
     public void GetFormular_EverythingFine_Expected()
     {
         // Arrange
@@ -26,10 +27,10 @@ public class FormularProviderTests
         using var resultForm = formularProvider.GetFormular<TestFormFine>();
 
         // Assert
-        Assert.NotNull(resultForm);
+        Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public void GetFormular_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -42,10 +43,10 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(formularProvider.GetFormular<TestFormNotRegistered>);
+        Assert.Throws<InvalidOperationException>(formularProvider.GetFormular<TestFormNotRegistered>);
     }
 
-    [Fact]
+    [Test]
     public async Task GetFormularAsync_EverythingFine_Expected()
     {
         // Arrange
@@ -61,10 +62,10 @@ public class FormularProviderTests
         using var resultForm = await formularProvider.GetFormularAsync<TestFormFine>();
 
         // Assert
-        Assert.NotNull(resultForm);
+        Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public async Task GetFormularAsync_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -77,12 +78,12 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
             await formularProvider.GetFormularAsync<TestFormNotRegistered>()
         );
     }
 
-    [Fact]
+    [Test]
     public void GetScopedForm_EverythingFine_Expected()
     {
         // Arrange
@@ -98,10 +99,10 @@ public class FormularProviderTests
         using var resultForm = formularProvider.GetScopedForm<TestFormFine>();
 
         // Assert
-        Assert.NotNull(resultForm);
+        Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public void GetScopedForm_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -114,10 +115,10 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(formularProvider.GetScopedForm<TestFormNotRegistered>);
+        Assert.Throws<InvalidOperationException>(formularProvider.GetScopedForm<TestFormNotRegistered>);
     }
 
-    [Fact]
+    [Test]
     public async Task GetScopedFormAsync_EverythingFine_Expected()
     {
         // Arrange
@@ -133,10 +134,10 @@ public class FormularProviderTests
         using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>();
 
         // Assert
-        Assert.NotNull(resultForm);
+        Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public async Task GetScopedFormAsync_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -149,12 +150,12 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
             await formularProvider.GetScopedFormAsync<TestFormNotRegistered>()
         );
     }
 
-    [Fact]
+    [Test]
     public void GetScopedForm_WithScope_EverythingFine_Expected()
     {
         // Arrange
@@ -171,10 +172,10 @@ public class FormularProviderTests
         using var resultForm = formularProvider.GetScopedForm<TestFormFine>(scope);
 
         // Assert
-        Assert.NotNull(resultForm);
+        Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public void GetScopedForm_WithScope_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -188,12 +189,10 @@ public class FormularProviderTests
         using var scope = serviceProvider.CreateScope();
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(() =>
-            formularProvider.GetScopedForm<TestFormNotRegistered>(scope)
-        );
+        Assert.Throws<InvalidOperationException>(() => formularProvider.GetScopedForm<TestFormNotRegistered>(scope));
     }
 
-    [Fact]
+    [Test]
     public async Task GetScopedFormAsync_WithScope_EverythingFine_Expected()
     {
         // Arrange
@@ -210,10 +209,10 @@ public class FormularProviderTests
         using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>(scope);
 
         // Assert
-        Assert.NotNull(resultForm);
+        Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public async Task GetScopedFormAsync_WithScope_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -227,12 +226,12 @@ public class FormularProviderTests
         using var scope = serviceProvider.CreateScope();
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
             await formularProvider.GetScopedFormAsync<TestFormNotRegistered>(scope)
         );
     }
 
-    [Fact]
+    [Test]
     public void GetMainFormular_EverythingFine_Expected()
     {
         // Arrange
@@ -250,10 +249,10 @@ public class FormularProviderTests
         using var resultForm = formularProvider.GetMainFormular();
 
         // Assert
-        Assert.NotNull(resultForm);
+        Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public void GetMainFormular_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -266,10 +265,10 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(formularProvider.GetMainFormular);
+        Assert.Throws<InvalidOperationException>(formularProvider.GetMainFormular);
     }
 
-    [Fact]
+    [Test]
     public async Task GetMainFormularAsync_EverythingFine_Expected()
     {
         // Arrange
@@ -287,10 +286,10 @@ public class FormularProviderTests
         using var resultForm = await formularProvider.GetMainFormularAsync();
 
         // Assert
-        Assert.NotNull(resultForm);
+        Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public async Task GetMainFormularAsync_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -303,9 +302,7 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-            await formularProvider.GetMainFormularAsync()
-        );
+        await Assert.ThrowsAsync<InvalidOperationException>(async () => await formularProvider.GetMainFormularAsync());
     }
 
 #pragma warning disable CA1812
