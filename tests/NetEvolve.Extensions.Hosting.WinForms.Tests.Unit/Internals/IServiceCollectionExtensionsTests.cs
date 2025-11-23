@@ -7,18 +7,19 @@ using NetEvolve.Extensions.Hosting.WinForms.Internals;
 public partial class IServiceCollectionExtensionsTests
 {
     [Test]
-    public void AddWindowsFormsLifetime_ServicesNull_ThrowArgumentNullException()
-    {
-        var exception = await Assert.Throws<ArgumentNullException>(() =>
-            IServiceCollectionExtensions.AddWindowsFormsLifetime(null!, null)
+    public void AddWindowsFormsLifetime_ServicesNull_ThrowArgumentNullException() =>
+        _ = Assert.Throws<ArgumentNullException>(
+            "services",
+            () => IServiceCollectionExtensions.AddWindowsFormsLifetime(null!, null)
         );
-        await Assert.That(exception.ParamName).IsEqualTo("services");
-    }
 
     [Test]
     [Arguments(5, null)]
     [Arguments(11, "EnableConsoleShutdown")]
-    public void AddWindowsFormsLifetime_ConfigurationNull_Expected(int expectedServices, string? configurationType)
+    public async Task AddWindowsFormsLifetime_ConfigurationNull_Expected(
+        int expectedServices,
+        string? configurationType
+    )
     {
         Action<WindowsFormsOptions>? configure = configurationType switch
         {
@@ -30,7 +31,10 @@ public partial class IServiceCollectionExtensionsTests
 
         var services = serviceCollection.BuildServiceProvider();
 
-        await Assert.That(services).IsNotNull();
-        await Assert.That(serviceCollection.Count).IsEqualTo(expectedServices);
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(services).IsNotNull();
+            _ = await Assert.That(serviceCollection.Count).IsEqualTo(expectedServices);
+        }
     }
 }
