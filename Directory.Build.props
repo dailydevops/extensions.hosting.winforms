@@ -1,11 +1,7 @@
 <Project>
   <PropertyGroup>
-    <_TargetFrameworks>net8.0-windows;net9.0-windows</_TargetFrameworks>
+    <_TargetFrameworks>net8.0-windows;net9.0-windows;net10.0-windows</_TargetFrameworks>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
-  </PropertyGroup>
-  <PropertyGroup>
-    <!-- Workaround, until https://github.com/GitTools/GitVersion/pull/4206 is released -->
-    <GitVersionTargetFramework>net8.0</GitVersionTargetFramework>
   </PropertyGroup>
   <PropertyGroup Label="Package settings">
     <Title>$(MSBuildProjectName)</Title>
