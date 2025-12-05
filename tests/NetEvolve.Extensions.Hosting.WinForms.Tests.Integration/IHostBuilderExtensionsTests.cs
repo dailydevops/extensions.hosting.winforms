@@ -3,9 +3,11 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using global::TUnit.Core.Executors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+[TestExecutor<STAThreadExecutor>]
 public partial class IHostBuilderExtensionsTests
 {
     [Test]
