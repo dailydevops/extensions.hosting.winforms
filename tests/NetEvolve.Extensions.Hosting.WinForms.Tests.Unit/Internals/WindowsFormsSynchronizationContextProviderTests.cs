@@ -96,7 +96,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = Assert.Throws<ArgumentNullException>("Context", () => provider.Invoke((int input) => input * 2, 21));
+        _ = Assert.Throws<ArgumentNullException>("Context", () => provider.Invoke(input => input * 2, 21));
     }
 
     [Test]
@@ -109,7 +109,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
 
         // Act
 #pragma warning disable CA1849, S6966, VSTHRD103 // Call async methods when in an async method
-        var result = provider.Invoke((int input) => input * 2, 21);
+        var result = provider.Invoke(input => input * 2, 21);
 #pragma warning restore CA1849, S6966, VSTHRD103 // Call async methods when in an async method
 
         // Assert
@@ -278,7 +278,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         // Act / Assert
         _ = Assert.ThrowsAsync<ArgumentNullException>(
             "Context",
-            async () => await provider.InvokeAsync((int input) => input * 2, 21)
+            async () => await provider.InvokeAsync(input => input * 2, 21)
         );
     }
 
@@ -293,7 +293,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         // Act
         _ = await Assert.ThrowsAsync<NotImplementedException>(async () =>
             await provider.InvokeAsync<int, int>(
-                (int input) =>
+                input =>
                 {
                     throw new NotImplementedException();
                 },
@@ -315,7 +315,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
 
         // Act
         _ = await Assert.ThrowsAsync<TaskCanceledException>(async () =>
-            await provider.InvokeAsync((int input) => input * 2, 21, new CancellationToken(true))
+            await provider.InvokeAsync(input => input * 2, 21, new CancellationToken(true))
         );
     }
 
@@ -328,7 +328,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
-        var result = await provider.InvokeAsync((int input) => input * 2, 21);
+        var result = await provider.InvokeAsync(input => input * 2, 21);
 
         // Assert
         _ = await Assert.That(result).IsEqualTo(42);
