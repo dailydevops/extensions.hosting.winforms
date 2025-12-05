@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.Hosting.WinForms.Internals;
-using Xunit;
+using static System.Formats.Asn1.AsnWriter;
 
-public class FormularProviderTests
+public partial class FormularProviderTests
 {
-    [Fact]
-    public void GetFormular_EverythingFine_Expected()
+    [Test]
+    public async Task GetFormular_EverythingFine_Expected()
     {
         // Arrange
         var services = new ServiceCollection().AddScoped<TestFormFine>();
@@ -23,13 +23,15 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act
+#pragma warning disable CA1849, S6966, VSTHRD103 // Call async methods when in an async method
         using var resultForm = formularProvider.GetFormular<TestFormFine>();
+#pragma warning restore CA1849, S6966, VSTHRD103 // Call async methods when in an async method
 
         // Assert
-        Assert.NotNull(resultForm);
+        _ = await Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public void GetFormular_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -42,10 +44,10 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(formularProvider.GetFormular<TestFormNotRegistered>);
+        _ = Assert.Throws<InvalidOperationException>(() => formularProvider.GetFormular<TestFormNotRegistered>());
     }
 
-    [Fact]
+    [Test]
     public async Task GetFormularAsync_EverythingFine_Expected()
     {
         // Arrange
@@ -61,10 +63,10 @@ public class FormularProviderTests
         using var resultForm = await formularProvider.GetFormularAsync<TestFormFine>();
 
         // Assert
-        Assert.NotNull(resultForm);
+        _ = await Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public async Task GetFormularAsync_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -82,8 +84,8 @@ public class FormularProviderTests
         );
     }
 
-    [Fact]
-    public void GetScopedForm_EverythingFine_Expected()
+    [Test]
+    public async Task GetScopedForm_EverythingFine_Expected()
     {
         // Arrange
         var services = new ServiceCollection().AddScoped<TestFormFine>();
@@ -95,13 +97,15 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act
+#pragma warning disable CA1849, S6966, VSTHRD103 // Call async methods when in an async method
         using var resultForm = formularProvider.GetScopedForm<TestFormFine>();
+#pragma warning restore CA1849, S6966, VSTHRD103 // Call async methods when in an async method
 
         // Assert
-        Assert.NotNull(resultForm);
+        _ = await Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public void GetScopedForm_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -114,10 +118,10 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(formularProvider.GetScopedForm<TestFormNotRegistered>);
+        _ = Assert.Throws<InvalidOperationException>(() => formularProvider.GetScopedForm<TestFormNotRegistered>());
     }
 
-    [Fact]
+    [Test]
     public async Task GetScopedFormAsync_EverythingFine_Expected()
     {
         // Arrange
@@ -133,10 +137,10 @@ public class FormularProviderTests
         using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>();
 
         // Assert
-        Assert.NotNull(resultForm);
+        _ = await Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public async Task GetScopedFormAsync_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -154,8 +158,8 @@ public class FormularProviderTests
         );
     }
 
-    [Fact]
-    public void GetScopedForm_WithScope_EverythingFine_Expected()
+    [Test]
+    public async Task GetScopedForm_WithScope_EverythingFine_Expected()
     {
         // Arrange
         var services = new ServiceCollection().AddScoped<TestFormFine>();
@@ -168,13 +172,15 @@ public class FormularProviderTests
         using var scope = serviceProvider.CreateScope();
 
         // Act
+#pragma warning disable CA1849, S6966, VSTHRD103 // Call async methods when in an async method
         using var resultForm = formularProvider.GetScopedForm<TestFormFine>(scope);
+#pragma warning restore CA1849, S6966, VSTHRD103 // Call async methods when in an async method
 
         // Assert
-        Assert.NotNull(resultForm);
+        _ = await Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public void GetScopedForm_WithScope_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -193,7 +199,7 @@ public class FormularProviderTests
         );
     }
 
-    [Fact]
+    [Test]
     public async Task GetScopedFormAsync_WithScope_EverythingFine_Expected()
     {
         // Arrange
@@ -210,10 +216,10 @@ public class FormularProviderTests
         using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>(scope);
 
         // Assert
-        Assert.NotNull(resultForm);
+        _ = await Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public async Task GetScopedFormAsync_WithScope_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -232,8 +238,8 @@ public class FormularProviderTests
         );
     }
 
-    [Fact]
-    public void GetMainFormular_EverythingFine_Expected()
+    [Test]
+    public async Task GetMainFormular_EverythingFine_Expected()
     {
         // Arrange
         var services = new ServiceCollection()
@@ -247,13 +253,15 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act
+#pragma warning disable CA1849, S6966, VSTHRD103 // Call async methods when in an async method
         using var resultForm = formularProvider.GetMainFormular();
+#pragma warning restore CA1849, S6966, VSTHRD103 // Call async methods when in an async method
 
         // Assert
-        Assert.NotNull(resultForm);
+        _ = await Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public void GetMainFormular_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange
@@ -266,10 +274,10 @@ public class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act / Assert
-        _ = Assert.Throws<InvalidOperationException>(formularProvider.GetMainFormular);
+        _ = Assert.Throws<InvalidOperationException>(() => formularProvider.GetMainFormular());
     }
 
-    [Fact]
+    [Test]
     public async Task GetMainFormularAsync_EverythingFine_Expected()
     {
         // Arrange
@@ -287,10 +295,10 @@ public class FormularProviderTests
         using var resultForm = await formularProvider.GetMainFormularAsync();
 
         // Assert
-        Assert.NotNull(resultForm);
+        _ = await Assert.That(resultForm).IsNotNull();
     }
 
-    [Fact]
+    [Test]
     public async Task GetMainFormularAsync_InvalidForm_ThrowsInvalidOperationException()
     {
         // Arrange

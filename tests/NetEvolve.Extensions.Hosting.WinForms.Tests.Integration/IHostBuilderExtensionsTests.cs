@@ -3,13 +3,14 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using global::TUnit.Core.Executors;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Xunit;
 
-public class IHostBuilderExtensionsTests
+[TestExecutor<STAThreadExecutor>]
+public partial class IHostBuilderExtensionsTests
 {
-    [Fact]
+    [Test]
     public async Task UseWindowsForms_IHostBuilder_StartForm_ConfigureNull_Expected()
     {
         using var host = Host.CreateDefaultBuilder().UseWindowsForms<TestForm>().Build();
@@ -26,13 +27,13 @@ public class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.NotNull(mainForm);
-        _ = Assert.IsType<TestForm>(mainForm);
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
 
-    [Fact]
+    [Test]
     public async Task UseWindowsForms_IHostBuilder_StartForm_ConfigureFine_Expected()
     {
         using var host = Host.CreateDefaultBuilder()
@@ -55,13 +56,13 @@ public class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.NotNull(mainForm);
-        _ = Assert.IsType<TestForm>(mainForm);
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
 
-    [Fact]
+    [Test]
     public async Task UseWindowsForms_IHostBuilder_ApplicationContext_Expected()
     {
         using var host = Host.CreateDefaultBuilder().UseWindowsForms<TestApplicationContext>().Build();
@@ -78,13 +79,13 @@ public class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.NotNull(mainForm);
-        _ = Assert.IsType<TestForm>(mainForm);
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
 
-    [Fact]
+    [Test]
     public async Task UseWindowsForms_IHostBuilder_ApplicationContextFactory_Expected()
     {
         using var host = Host.CreateDefaultBuilder()
@@ -103,13 +104,13 @@ public class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.NotNull(mainForm);
-        _ = Assert.IsType<TestForm>(mainForm);
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
 
-    [Fact]
+    [Test]
     public async Task UseWindowsForms_IHostBuilder_AdvancedFactory_Expected()
     {
         using var host = Host.CreateDefaultBuilder()
@@ -128,14 +129,14 @@ public class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.NotNull(mainForm);
-        _ = Assert.IsType<TestForm>(mainForm);
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
 
 #if NET7_0_OR_GREATER
-    [Fact]
+    [Test]
     public async Task UseWindowsForms_HostApplicationBuilder_StartForm_ConfigureNull_Expected()
     {
         var builder = Host.CreateApplicationBuilder();
@@ -154,13 +155,13 @@ public class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.NotNull(mainForm);
-        _ = Assert.IsType<TestForm>(mainForm);
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
 
-    [Fact]
+    [Test]
     public async Task UseWindowsForms_HostApplicationBuilder_StartForm_ConfigureFine_Expected()
     {
         var builder = Host.CreateApplicationBuilder();
@@ -183,13 +184,13 @@ public class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.NotNull(mainForm);
-        _ = Assert.IsType<TestForm>(mainForm);
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
 
-    [Fact]
+    [Test]
     public async Task UseWindowsForms_HostApplicationBuilder_ApplicationContext_Expected()
     {
         var builder = Host.CreateApplicationBuilder();
@@ -208,13 +209,13 @@ public class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.NotNull(mainForm);
-        _ = Assert.IsType<TestForm>(mainForm);
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
 
-    [Fact]
+    [Test]
     public async Task UseWindowsForms_HostApplicationBuilder_ApplicationContextFactory_Expected()
     {
         var builder = Host.CreateApplicationBuilder();
@@ -233,13 +234,13 @@ public class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.NotNull(mainForm);
-        _ = Assert.IsType<TestForm>(mainForm);
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }
 
-    [Fact]
+    [Test]
     public async Task UseWindowsForms_HostApplicationBuilder_AdvancedFactory_Expected()
     {
         var builder = Host.CreateApplicationBuilder();
@@ -258,8 +259,8 @@ public class IHostBuilderExtensionsTests
             await Task.Delay(15);
         } while (!mainForm.IsHandleCreated);
 
-        Assert.NotNull(mainForm);
-        _ = Assert.IsType<TestForm>(mainForm);
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
         await host.StopAsync();
     }

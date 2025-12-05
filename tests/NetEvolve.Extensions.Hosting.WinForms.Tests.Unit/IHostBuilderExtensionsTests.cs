@@ -5,11 +5,10 @@ using System.Windows.Forms;
 using Microsoft.Extensions.Hosting;
 using NetEvolve.Extensions.Hosting.WinForms.Tests.Unit.Internals;
 using NSubstitute;
-using Xunit;
 
-public class IHostBuilderExtensionsTests
+public partial class IHostBuilderExtensionsTests
 {
-    [Fact]
+    [Test]
     public void UseWindowsForms_TStartForm_IHostBuilderNull_ThrowArgumentNullException()
     {
         IHostBuilder builder = null!;
@@ -17,7 +16,7 @@ public class IHostBuilderExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", () => builder.UseWindowsForms<TestFormFine>());
     }
 
-    [Fact]
+    [Test]
     public void UseWindowsForms_TApplicationContext_IHostBuilderNull_ThrowArgumentNullException()
     {
         IHostBuilder builder = null!;
@@ -25,7 +24,7 @@ public class IHostBuilderExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", () => builder.UseWindowsForms<TestApplicatonContext>());
     }
 
-    [Fact]
+    [Test]
     public void UseWindowsForms_TApplicationContextTStartForm_IHostBuilderNull_ThrowArgumentNullException()
     {
         IHostBuilder builder = null!;
@@ -36,7 +35,7 @@ public class IHostBuilderExtensionsTests
         );
     }
 
-    [Fact]
+    [Test]
     public void UseWindowsForms_TApplicationContextTStartForm_IHostBuilderSet_ContextFactoryNull_ThrowArgumentNullException()
     {
         var builder = Substitute.For<IHostBuilder>();
@@ -48,7 +47,7 @@ public class IHostBuilderExtensionsTests
     }
 
 #if NET7_0_OR_GREATER
-    [Fact]
+    [Test]
     public void UseWindowsForms_TStartForm_HostApplicationBuilderNull_ThrowArgumentNullException()
     {
         HostApplicationBuilder builder = null!;
@@ -56,7 +55,7 @@ public class IHostBuilderExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", () => builder!.UseWindowsForms<TestFormFine>());
     }
 
-    [Fact]
+    [Test]
     public void UseWindowsForms_TApplicationContext_HostApplicationBuilderNull_ThrowArgumentNullException()
     {
         HostApplicationBuilder builder = null!;
@@ -64,7 +63,7 @@ public class IHostBuilderExtensionsTests
         _ = Assert.Throws<ArgumentNullException>("builder", () => builder.UseWindowsForms<TestApplicatonContext>());
     }
 
-    [Fact]
+    [Test]
     public void UseWindowsForms_TApplicationContextTStartForm_HostApplicationBuilderNull_ThrowArgumentNullException()
     {
         HostApplicationBuilder builder = null!;
@@ -75,7 +74,7 @@ public class IHostBuilderExtensionsTests
         );
     }
 
-    [Fact]
+    [Test]
     public void UseWindowsForms_TApplicationContextTStartForm_HostApplicationBuilderSet_ContextFactoryNull_ThrowArgumentNullException()
     {
         var builder = new HostApplicationBuilder();

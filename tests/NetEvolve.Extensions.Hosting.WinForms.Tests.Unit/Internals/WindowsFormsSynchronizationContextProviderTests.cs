@@ -5,11 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NetEvolve.Extensions.Hosting.WinForms.Internals;
-using Xunit;
 
-public class WindowsFormsSynchronizationContextProviderTests
+public partial class WindowsFormsSynchronizationContextProviderTests
 {
-    [Fact]
+    [Test]
     public void Invoke_ActionNull_ThrowsArgumentNullException()
     {
         // Arrange
@@ -19,7 +18,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         _ = Assert.Throws<ArgumentNullException>("action", () => provider.Invoke(null!));
     }
 
-    [Fact]
+    [Test]
     public void Invoke_Action_ContextNull_ThrowsArgumentNullException()
     {
         // Arrange
@@ -29,7 +28,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         _ = Assert.Throws<ArgumentNullException>("Context", () => provider.Invoke(() => { }));
     }
 
-    [Fact]
+    [Test]
     public void Invoke_Action_Expected()
     {
         // Arrange
@@ -40,10 +39,10 @@ public class WindowsFormsSynchronizationContextProviderTests
         // Act / Assert
         provider.Invoke(() => { });
 
-        Assert.True(true, "No exception was thrown.");
+        // No exception was thrown.
     }
 
-    [Fact]
+    [Test]
     public void Invoke_FuncNull_ThrowsArgumentNullException()
     {
         // Arrange
@@ -53,7 +52,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         _ = Assert.Throws<ArgumentNullException>("action", () => provider.Invoke((Func<int>)null!));
     }
 
-    [Fact]
+    [Test]
     public void Invoke_Func_ContextNull_ThrowsArgumentNullException()
     {
         // Arrange
@@ -63,8 +62,8 @@ public class WindowsFormsSynchronizationContextProviderTests
         _ = Assert.Throws<ArgumentNullException>("Context", () => provider.Invoke(() => 42));
     }
 
-    [Fact]
-    public void Invoke_Func_Expected()
+    [Test]
+    public async Task Invoke_Func_Expected()
     {
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
@@ -72,13 +71,15 @@ public class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
+#pragma warning disable CA1849, S6966, VSTHRD103 // Call async methods when in an async method
         var result = provider.Invoke(() => 42);
+#pragma warning restore CA1849, S6966, VSTHRD103 // Call async methods when in an async method
 
         // Assert
-        Assert.Equal(42, result);
+        _ = await Assert.That(result).IsEqualTo(42);
     }
 
-    [Fact]
+    [Test]
     public void Invoke_FuncWithInputNull_ThrowsArgumentNullException()
     {
         // Arrange
@@ -88,7 +89,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         _ = Assert.Throws<ArgumentNullException>("action", () => provider.Invoke((Func<int, int>)null!, 42));
     }
 
-    [Fact]
+    [Test]
     public void Invoke_FuncWithInput_ContextNull_ThrowsArgumentNullException()
     {
         // Arrange
@@ -98,8 +99,8 @@ public class WindowsFormsSynchronizationContextProviderTests
         _ = Assert.Throws<ArgumentNullException>("Context", () => provider.Invoke((int input) => input * 2, 21));
     }
 
-    [Fact]
-    public void Invoke_FuncWithInput_Expected()
+    [Test]
+    public async Task Invoke_FuncWithInput_Expected()
     {
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
@@ -107,36 +108,35 @@ public class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
+#pragma warning disable CA1849, S6966, VSTHRD103 // Call async methods when in an async method
         var result = provider.Invoke((int input) => input * 2, 21);
+#pragma warning restore CA1849, S6966, VSTHRD103 // Call async methods when in an async method
 
         // Assert
-        Assert.Equal(42, result);
+        _ = await Assert.That(result).IsEqualTo(42);
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_ActionNull_ThrowsArgumentNullException()
     {
         // Arrange
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<ArgumentNullException>("action", async () => await provider.InvokeAsync(null!));
+        _ = Assert.ThrowsAsync<ArgumentNullException>("action", async () => await provider.InvokeAsync(null!));
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_Action_ContextNull_ThrowsArgumentNullException()
     {
         // Arrange
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<ArgumentNullException>(
-            "Context",
-            async () => await provider.InvokeAsync(() => { })
-        );
+        _ = Assert.ThrowsAsync<ArgumentNullException>("Context", async () => await provider.InvokeAsync(() => { }));
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_ActionThrows_ExpectedException()
     { // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
@@ -152,7 +152,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         );
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_Action_CancellationTokenCanceled_ThrowsTaskCanceledException()
     {
         // Arrange
@@ -169,7 +169,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         );
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_Action_Expected()
     {
         // Arrange
@@ -181,36 +181,33 @@ public class WindowsFormsSynchronizationContextProviderTests
         await provider.InvokeAsync(() => { });
 
         // Assert
-        Assert.True(true, "No exception was thrown.");
+        // No exception was thrown.
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_FuncNull_ThrowsArgumentNullException()
     {
         // Arrange
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<ArgumentNullException>(
+        _ = Assert.ThrowsAsync<ArgumentNullException>(
             "action",
             async () => await provider.InvokeAsync((Func<int>)null!)
         );
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_Func_ContextNull_ThrowsArgumentNullException()
     {
         // Arrange
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<ArgumentNullException>(
-            "Context",
-            async () => await provider.InvokeAsync(() => 42)
-        );
+        _ = Assert.ThrowsAsync<ArgumentNullException>("Context", async () => await provider.InvokeAsync(() => 42));
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_FuncThrows_ExpectedException()
     {
         // Arrange
@@ -227,7 +224,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         );
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_Func_CancellationTokenCanceled_ThrowsTaskCanceledException()
     {
         // Arrange
@@ -244,7 +241,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         );
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_Func_Expected()
     {
         // Arrange
@@ -256,36 +253,36 @@ public class WindowsFormsSynchronizationContextProviderTests
         var result = await provider.InvokeAsync(() => 42);
 
         // Assert
-        Assert.Equal(42, result);
+        _ = await Assert.That(result).IsEqualTo(42);
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_FuncWithInputNull_ThrowsArgumentNullException()
     {
         // Arrange
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<ArgumentNullException>(
+        _ = Assert.ThrowsAsync<ArgumentNullException>(
             "action",
             async () => await provider.InvokeAsync((Func<int, int>)null!, 42)
         );
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_FuncWithInput_ContextNull_ThrowsArgumentNullException()
     {
         // Arrange
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = await Assert.ThrowsAsync<ArgumentNullException>(
+        _ = Assert.ThrowsAsync<ArgumentNullException>(
             "Context",
             async () => await provider.InvokeAsync((int input) => input * 2, 21)
         );
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_FuncWithInputThrows_ExpectedException()
     {
         // Arrange
@@ -305,7 +302,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         );
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_FuncWithInput_CancellationTokenCanceled_ThrowsTaskCanceledException()
     {
         // Arrange
@@ -322,7 +319,7 @@ public class WindowsFormsSynchronizationContextProviderTests
         );
     }
 
-    [Fact]
+    [Test]
     public async Task InvokeAsync_FuncWithInput_Expected()
     {
         // Arrange
@@ -334,6 +331,6 @@ public class WindowsFormsSynchronizationContextProviderTests
         var result = await provider.InvokeAsync((int input) => input * 2, 21);
 
         // Assert
-        Assert.Equal(42, result);
+        _ = await Assert.That(result).IsEqualTo(42);
     }
 }

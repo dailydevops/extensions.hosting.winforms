@@ -1,17 +1,16 @@
 ﻿namespace NetEvolve.Extensions.Hosting.WinForms.Tests.Architecture;
 
 using ArchUnitNET.Domain;
-using ArchUnitNET.xUnit;
-using Xunit;
+using ArchUnitNET.TUnit;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;
 
-public class NamespaceTests
+public partial class NamespaceTests
 {
     private static readonly IObjectProvider<IType> _objects = Types()
         .That()
         .ResideInNamespace("NetEvolve.Extensions.Hosting.WinForms");
 
-    [Fact]
+    [Test]
     public void Classes_should_be_public()
     {
         var rule = Classes().That().Are(_objects).Should().BePublic();
@@ -19,7 +18,7 @@ public class NamespaceTests
         rule.Check(ProjectArchitecture.Instance);
     }
 
-    [Fact]
+    [Test]
     public void Classes_should_be_Sealed_Or_Static()
     {
         var rule = Classes().That().Are(_objects).Should().BeSealed();
@@ -27,7 +26,7 @@ public class NamespaceTests
         rule.Check(ProjectArchitecture.Instance);
     }
 
-    [Fact]
+    [Test]
     public void Interfaces_should_be_public()
     {
         var rule = Interfaces().That().Are(_objects).Should().BePublic();

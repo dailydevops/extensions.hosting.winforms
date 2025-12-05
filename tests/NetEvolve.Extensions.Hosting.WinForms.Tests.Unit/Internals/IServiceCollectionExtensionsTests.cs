@@ -3,42 +3,38 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using NetEvolve.Extensions.Hosting.WinForms.Internals;
-using Xunit;
 
-public class IServiceCollectionExtensionsTests
+public partial class IServiceCollectionExtensionsTests
 {
-    [Fact]
+    [Test]
     public void AddWindowsFormsLifetime_ServicesNull_ThrowArgumentNullException() =>
         _ = Assert.Throws<ArgumentNullException>(
             "services",
             () => IServiceCollectionExtensions.AddWindowsFormsLifetime(null!, null)
         );
 
-    [Theory]
-    [MemberData(nameof(AddWindowsFormsData))]
-    public void AddWindowsFormsLifetime_ConfigurationNull_Expected(
+    [Test]
+    [Arguments(5, null)]
+    [Arguments(11, "EnableConsoleShutdown")]
+    public async Task AddWindowsFormsLifetime_ConfigurationNull_Expected(
         int expectedServices,
-        Action<WindowsFormsOptions>? configure
+        string? configurationType
     )
     {
+        Action<WindowsFormsOptions>? configure = configurationType switch
+        {
+            "EnableConsoleShutdown" => options => options.EnableConsoleShutdown = true,
+            _ => null,
+        };
+
         var serviceCollection = new ServiceCollection().AddWindowsFormsLifetime(configure);
 
         var services = serviceCollection.BuildServiceProvider();
 
-        Assert.NotNull(services);
-        Assert.Equal(expectedServices, serviceCollection.Count);
-    }
-
-    public static TheoryData<int, Action<WindowsFormsOptions>?> AddWindowsFormsData =>
-        new TheoryData<int, Action<WindowsFormsOptions>?>
+        using (Assert.Multiple())
         {
-            { 5, null },
-            {
-                11,
-                options =>
-                {
-                    options.EnableConsoleShutdown = true;
-                }
-            },
-        };
+            _ = await Assert.That(services).IsNotNull();
+            _ = await Assert.That(serviceCollection.Count).IsEqualTo(expectedServices);
+        }
+    }
 }
