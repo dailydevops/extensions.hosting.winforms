@@ -10,7 +10,7 @@
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.201" />
     <GlobalPackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15" />
     <GlobalPackageReference Include="NetEvolve.Defaults" Version="2.2.0" />
-    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.22.0.136894" />
+    <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.23.0.137933" />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.5" />
