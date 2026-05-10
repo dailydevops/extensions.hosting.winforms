@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 
-/// <inheritdoc />
+/// <inheritdoc cref="IFormularProvider" />
 internal sealed class FormularProvider(
     IServiceProvider serviceProvider,
     IWindowsFormsSynchronizationContextProvider synchronizationContext

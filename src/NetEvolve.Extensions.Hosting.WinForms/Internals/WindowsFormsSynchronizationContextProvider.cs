@@ -5,17 +5,21 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-/// <inheritdoc />
+/// <inheritdoc cref="IWindowsFormsSynchronizationContextProvider" />
 [SuppressMessage("Usage", "VSTHRD001:Avoid legacy thread switching APIs", Justification = "As designed.")]
 internal sealed class WindowsFormsSynchronizationContextProvider : IWindowsFormsSynchronizationContextProvider
 {
-    internal SynchronizationContext Context { get; set; } = default!;
+    internal SynchronizationContext? Context { get; set; }
 
     /// <inheritdoc/>
     public void Invoke([NotNull] Action action)
     {
         ArgumentNullException.ThrowIfNull(action);
-        ArgumentNullException.ThrowIfNull(Context);
+
+        if (Context is null)
+        {
+            throw new InvalidOperationException("The synchronization context is not set.");
+        }
 
         Context.Send(
             delegate
@@ -31,7 +35,11 @@ internal sealed class WindowsFormsSynchronizationContextProvider : IWindowsForms
     public TResult Invoke<TResult>([NotNull] Func<TResult> action)
     {
         ArgumentNullException.ThrowIfNull(action);
-        ArgumentNullException.ThrowIfNull(Context);
+
+        if (Context is null)
+        {
+            throw new InvalidOperationException("The synchronization context is not set.");
+        }
 
         TResult result = default!;
         Context.Send(
@@ -50,7 +58,11 @@ internal sealed class WindowsFormsSynchronizationContextProvider : IWindowsForms
     public TResult Invoke<TResult, TInput>([NotNull] Func<TInput, TResult> action, TInput input)
     {
         ArgumentNullException.ThrowIfNull(action);
-        ArgumentNullException.ThrowIfNull(Context);
+
+        if (Context is null)
+        {
+            throw new InvalidOperationException("The synchronization context is not set.");
+        }
 
         TResult result = default!;
         Context.Send(
@@ -68,7 +80,11 @@ internal sealed class WindowsFormsSynchronizationContextProvider : IWindowsForms
     public async ValueTask InvokeAsync([NotNull] Action action, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(action);
-        ArgumentNullException.ThrowIfNull(Context);
+
+        if (Context is null)
+        {
+            throw new InvalidOperationException("The synchronization context is not set.");
+        }
 
         var tcs = new TaskCompletionSource();
         Context.Post(
@@ -97,7 +113,11 @@ internal sealed class WindowsFormsSynchronizationContextProvider : IWindowsForms
     )
     {
         ArgumentNullException.ThrowIfNull(action);
-        ArgumentNullException.ThrowIfNull(Context);
+
+        if (Context is null)
+        {
+            throw new InvalidOperationException("The synchronization context is not set.");
+        }
 
         var tcs = new TaskCompletionSource<TResult>();
         Context.Post(
@@ -127,7 +147,11 @@ internal sealed class WindowsFormsSynchronizationContextProvider : IWindowsForms
     )
     {
         ArgumentNullException.ThrowIfNull(action);
-        ArgumentNullException.ThrowIfNull(Context);
+
+        if (Context is null)
+        {
+            throw new InvalidOperationException("The synchronization context is not set.");
+        }
 
         var tcs = new TaskCompletionSource<TResult>();
         Context.Post(

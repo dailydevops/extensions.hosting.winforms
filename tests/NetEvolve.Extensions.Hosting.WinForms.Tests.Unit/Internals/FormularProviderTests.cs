@@ -60,7 +60,7 @@ public partial class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act
-        using var resultForm = await formularProvider.GetFormularAsync<TestFormFine>();
+        using var resultForm = await formularProvider.GetFormularAsync<TestFormFine>().ConfigureAwait(false);
 
         // Assert
         _ = await Assert.That(resultForm).IsNotNull();
@@ -80,7 +80,7 @@ public partial class FormularProviderTests
 
         // Act / Assert
         _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-            await formularProvider.GetFormularAsync<TestFormNotRegistered>()
+            await formularProvider.GetFormularAsync<TestFormNotRegistered>().ConfigureAwait(false)
         );
     }
 
@@ -134,7 +134,7 @@ public partial class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act
-        using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>();
+        using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>().ConfigureAwait(false);
 
         // Assert
         _ = await Assert.That(resultForm).IsNotNull();
@@ -154,7 +154,7 @@ public partial class FormularProviderTests
 
         // Act / Assert
         _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-            await formularProvider.GetScopedFormAsync<TestFormNotRegistered>()
+            await formularProvider.GetScopedFormAsync<TestFormNotRegistered>().ConfigureAwait(false)
         );
     }
 
@@ -213,7 +213,7 @@ public partial class FormularProviderTests
         using var scope = serviceProvider.CreateScope();
 
         // Act
-        using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>(scope);
+        using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>(scope).ConfigureAwait(false);
 
         // Assert
         _ = await Assert.That(resultForm).IsNotNull();
@@ -234,7 +234,7 @@ public partial class FormularProviderTests
 
         // Act / Assert
         _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-            await formularProvider.GetScopedFormAsync<TestFormNotRegistered>(scope)
+            await formularProvider.GetScopedFormAsync<TestFormNotRegistered>(scope).ConfigureAwait(false)
         );
     }
 
@@ -292,7 +292,7 @@ public partial class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act
-        using var resultForm = await formularProvider.GetMainFormularAsync();
+        using var resultForm = await formularProvider.GetMainFormularAsync().ConfigureAwait(false);
 
         // Assert
         _ = await Assert.That(resultForm).IsNotNull();
@@ -312,7 +312,7 @@ public partial class FormularProviderTests
 
         // Act / Assert
         _ = await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-            await formularProvider.GetMainFormularAsync()
+            await formularProvider.GetMainFormularAsync().ConfigureAwait(false)
         );
     }
 
