@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.Extensions.Hosting.WinForms.Tests.Integration;
 
 using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using global::TUnit.Core.Executors;
@@ -15,22 +16,22 @@ public partial class IHostBuilderExtensionsTests
     {
         using var host = Host.CreateDefaultBuilder().UseWindowsForms<TestForm>().Build();
 
-        await host.StartAsync();
+        await host.StartAsync().ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync();
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15);
+            await Task.Delay(15).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync();
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -44,22 +45,22 @@ public partial class IHostBuilderExtensionsTests
             })
             .Build();
 
-        await host.StartAsync();
+        await host.StartAsync().ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync();
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15);
+            await Task.Delay(15).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync();
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -67,22 +68,22 @@ public partial class IHostBuilderExtensionsTests
     {
         using var host = Host.CreateDefaultBuilder().UseWindowsForms<TestApplicationContext>().Build();
 
-        await host.StartAsync();
+        await host.StartAsync().ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync();
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15);
+            await Task.Delay(15).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync();
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -92,22 +93,22 @@ public partial class IHostBuilderExtensionsTests
             .UseWindowsForms(sp => new TestApplicationContext(new TestForm()))
             .Build();
 
-        await host.StartAsync();
+        await host.StartAsync().ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync();
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15);
+            await Task.Delay(15).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync();
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -117,22 +118,22 @@ public partial class IHostBuilderExtensionsTests
             .UseWindowsForms<TestApplicationContext, TestForm>((sp, form) => new TestApplicationContext(form))
             .Build();
 
-        await host.StartAsync();
+        await host.StartAsync().ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync();
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15);
+            await Task.Delay(15).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync();
+        await host.StopAsync().ConfigureAwait(false);
     }
 
 #if NET7_0_OR_GREATER
@@ -143,22 +144,22 @@ public partial class IHostBuilderExtensionsTests
         _ = builder.UseWindowsForms<TestForm>();
         using var host = builder.Build();
 
-        await host.StartAsync();
+        await host.StartAsync().ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync();
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15);
+            await Task.Delay(15).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync();
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -172,22 +173,22 @@ public partial class IHostBuilderExtensionsTests
         });
         using var host = builder.Build();
 
-        await host.StartAsync();
+        await host.StartAsync().ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync();
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15);
+            await Task.Delay(15).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync();
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -197,22 +198,22 @@ public partial class IHostBuilderExtensionsTests
         _ = builder.UseWindowsForms<TestApplicationContext>();
         using var host = builder.Build();
 
-        await host.StartAsync();
+        await host.StartAsync().ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync();
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15);
+            await Task.Delay(15).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync();
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -222,22 +223,22 @@ public partial class IHostBuilderExtensionsTests
         _ = builder.UseWindowsForms(sp => new TestApplicationContext(new TestForm()));
         using var host = builder.Build();
 
-        await host.StartAsync();
+        await host.StartAsync().ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync();
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15);
+            await Task.Delay(15).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync();
+        await host.StopAsync().ConfigureAwait(false);
     }
 
     [Test]
@@ -247,22 +248,144 @@ public partial class IHostBuilderExtensionsTests
         _ = builder.UseWindowsForms<TestApplicationContext, TestForm>((sp, form) => new TestApplicationContext(form));
         using var host = builder.Build();
 
-        await host.StartAsync();
+        await host.StartAsync().ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync();
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15);
+            await Task.Delay(15).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync();
+        await host.StopAsync().ConfigureAwait(false);
+    }
+#endif
+
+    [Test]
+    public async Task UseWindowsForms_IHostBuilder_StartForm_WithDefaultFont_Expected()
+    {
+        using var font = new Font("Arial", 10f);
+        using var host = Host.CreateDefaultBuilder()
+            .UseWindowsForms<TestForm>(options =>
+            {
+                options.DefaultFont = font;
+            })
+            .Build();
+
+        await host.StartAsync().ConfigureAwait(false);
+
+        var provider = host.Services.GetService<IFormularProvider>()!;
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+
+        do
+        {
+            // This test runs too fast for the handle to be created.
+            // Therefore, we have to slow down a little.
+            await Task.Delay(15).ConfigureAwait(false);
+        } while (!mainForm.IsHandleCreated);
+
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
+
+        await host.StopAsync().ConfigureAwait(false);
+    }
+
+    [Test]
+    public async Task UseWindowsForms_IHostBuilder_StartForm_WithPreloadAction_Expected()
+    {
+        var preloadInvoked = false;
+
+        using var host = Host.CreateDefaultBuilder()
+            .UseWindowsForms<TestForm>(options =>
+            {
+                options.PreloadAction = (_, _) => preloadInvoked = true;
+            })
+            .Build();
+
+        await host.StartAsync().ConfigureAwait(false);
+
+        var provider = host.Services.GetService<IFormularProvider>()!;
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+
+        do
+        {
+            // This test runs too fast for the handle to be created.
+            // Therefore, we have to slow down a little.
+            await Task.Delay(15).ConfigureAwait(false);
+        } while (!mainForm.IsHandleCreated);
+
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
+        _ = await Assert.That(preloadInvoked).IsTrue();
+
+        await host.StopAsync().ConfigureAwait(false);
+    }
+
+#if NET7_0_OR_GREATER
+    [Test]
+    public async Task UseWindowsForms_HostApplicationBuilder_StartForm_WithDefaultFont_Expected()
+    {
+        using var font = new Font("Arial", 10f);
+        var builder = Host.CreateApplicationBuilder();
+        _ = builder.UseWindowsForms<TestForm>(options =>
+        {
+            options.DefaultFont = font;
+        });
+        using var host = builder.Build();
+
+        await host.StartAsync().ConfigureAwait(false);
+
+        var provider = host.Services.GetService<IFormularProvider>()!;
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+
+        do
+        {
+            // This test runs too fast for the handle to be created.
+            // Therefore, we have to slow down a little.
+            await Task.Delay(15).ConfigureAwait(false);
+        } while (!mainForm.IsHandleCreated);
+
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
+
+        await host.StopAsync().ConfigureAwait(false);
+    }
+
+    [Test]
+    public async Task UseWindowsForms_HostApplicationBuilder_StartForm_WithPreloadAction_Expected()
+    {
+        var preloadInvoked = false;
+
+        var builder = Host.CreateApplicationBuilder();
+        _ = builder.UseWindowsForms<TestForm>(options =>
+        {
+            options.PreloadAction = (_, _) => preloadInvoked = true;
+        });
+        using var host = builder.Build();
+
+        await host.StartAsync().ConfigureAwait(false);
+
+        var provider = host.Services.GetService<IFormularProvider>()!;
+        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+
+        do
+        {
+            // This test runs too fast for the handle to be created.
+            // Therefore, we have to slow down a little.
+            await Task.Delay(15).ConfigureAwait(false);
+        } while (!mainForm.IsHandleCreated);
+
+        _ = await Assert.That(mainForm).IsNotNull();
+        _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
+        _ = await Assert.That(preloadInvoked).IsTrue();
+
+        await host.StopAsync().ConfigureAwait(false);
     }
 #endif
 
