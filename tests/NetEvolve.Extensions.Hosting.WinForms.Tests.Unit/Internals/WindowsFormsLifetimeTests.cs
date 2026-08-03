@@ -77,7 +77,7 @@ public partial class WindowsFormsLifetimeTests
 
         // Act – simulate the Console.CancelKeyPress event by invoking the handler
         // directly via reflection (the method is private but testable through the event).
-        var eventArgs = new ConsoleCancelEventArgs_Wrapper();
+        var eventArgs = new ConsoleCancelEventArgsWrapper();
         RaiseCancelKeyPress(lifetime, eventArgs);
 
         // Assert
@@ -100,7 +100,7 @@ public partial class WindowsFormsLifetimeTests
         await lifetime.WaitForStartAsync(CancellationToken.None).ConfigureAwait(false);
 
         // Verify the handler is registered: invoking it directly must call StopApplication.
-        RaiseCancelKeyPress(lifetime, new ConsoleCancelEventArgs_Wrapper());
+        RaiseCancelKeyPress(lifetime, new ConsoleCancelEventArgsWrapper());
         applicationLifetime.StopApplication().WasCalled(Times.Once);
 
         // Act
@@ -139,7 +139,7 @@ public partial class WindowsFormsLifetimeTests
     /// This is necessary because <see cref="ConsoleCancelEventArgs"/> has no public constructor
     /// and <see cref="Console.CancelKeyPress"/> cannot be raised programmatically.
     /// </summary>
-    private static void RaiseCancelKeyPress(WindowsFormsLifetime lifetime, ConsoleCancelEventArgs_Wrapper args)
+    private static void RaiseCancelKeyPress(WindowsFormsLifetime lifetime, ConsoleCancelEventArgsWrapper args)
     {
         var method = typeof(WindowsFormsLifetime).GetMethod(
             "OnCancelKeyPress",
@@ -153,13 +153,13 @@ public partial class WindowsFormsLifetimeTests
     /// Wrapper that creates a <see cref="ConsoleCancelEventArgs"/> instance via reflection
     /// (its constructor is internal) and exposes the <see cref="Cancel"/> property.
     /// </summary>
-    private sealed class ConsoleCancelEventArgs_Wrapper
+    private sealed class ConsoleCancelEventArgsWrapper
     {
         public ConsoleCancelEventArgs EventArgs { get; }
 
         public bool Cancel => EventArgs.Cancel;
 
-        public ConsoleCancelEventArgs_Wrapper() =>
+        public ConsoleCancelEventArgsWrapper() =>
             EventArgs = (ConsoleCancelEventArgs)
                 System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(ConsoleCancelEventArgs));
     }
