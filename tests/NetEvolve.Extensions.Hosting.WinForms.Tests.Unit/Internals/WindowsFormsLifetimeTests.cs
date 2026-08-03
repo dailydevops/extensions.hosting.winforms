@@ -3,11 +3,11 @@ namespace NetEvolve.Extensions.Hosting.WinForms.Tests.Unit.Internals;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using global::TUnit.Mocks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using NetEvolve.Extensions.Hosting.WinForms.Internals;
-using NSubstitute;
 
 public partial class WindowsFormsLifetimeTests
 {
@@ -16,14 +16,14 @@ public partial class WindowsFormsLifetimeTests
         IHostApplicationLifetime? applicationLifetime = null
     )
     {
-        var environment = Substitute.For<IHostEnvironment>();
+        var environment = IHostEnvironment.Mock();
         _ = environment.EnvironmentName.Returns("Testing");
         _ = environment.ContentRootPath.Returns("/");
 
         return new WindowsFormsLifetime(
             Options.Create(options),
-            environment,
-            applicationLifetime ?? Substitute.For<IHostApplicationLifetime>(),
+            environment.Object,
+            applicationLifetime ?? IHostApplicationLifetime.Mock().Object,
             NullLoggerFactory.Instance
         );
     }
@@ -62,8 +62,8 @@ public partial class WindowsFormsLifetimeTests
     {
         // Arrange
         var stopCalled = false;
-        var applicationLifetime = Substitute.For<IHostApplicationLifetime>();
-        applicationLifetime.When(x => x.StopApplication()).Do(_ => stopCalled = true);
+        var applicationLifetime = IHostApplicationLifetime.Mock();
+        _ = applicationLifetime.StopApplication().Callback(() => stopCalled = true);
 
         // Provide non-cancellable tokens so the registration callbacks are never triggered.
         _ = applicationLifetime.ApplicationStarted.Returns(CancellationToken.None);
@@ -71,13 +71,13 @@ public partial class WindowsFormsLifetimeTests
 
         var options = new WindowsFormsOptions { EnableConsoleShutdown = true, SuppressStatusMessages = true };
 
-        using var lifetime = CreateLifetime(options, applicationLifetime);
+        using var lifetime = CreateLifetime(options, applicationLifetime.Object);
 
         await lifetime.WaitForStartAsync(CancellationToken.None).ConfigureAwait(false);
 
         // Act – simulate the Console.CancelKeyPress event by invoking the handler
         // directly via reflection (the method is private but testable through the event).
-        var eventArgs = new ConsoleCancelEventArgs_Wrapper();
+        var eventArgs = new ConsoleCancelEventArgsWrapper();
         RaiseCancelKeyPress(lifetime, eventArgs);
 
         // Assert
@@ -89,25 +89,25 @@ public partial class WindowsFormsLifetimeTests
     public async Task Dispose_EnableConsoleShutdown_True_UnregistersHandler()
     {
         // Arrange
-        var applicationLifetime = Substitute.For<IHostApplicationLifetime>();
+        var applicationLifetime = IHostApplicationLifetime.Mock();
         _ = applicationLifetime.ApplicationStarted.Returns(CancellationToken.None);
         _ = applicationLifetime.ApplicationStopping.Returns(CancellationToken.None);
 
         var options = new WindowsFormsOptions { EnableConsoleShutdown = true, SuppressStatusMessages = true };
 
-        var lifetime = CreateLifetime(options, applicationLifetime);
+        var lifetime = CreateLifetime(options, applicationLifetime.Object);
 
         await lifetime.WaitForStartAsync(CancellationToken.None).ConfigureAwait(false);
 
         // Verify the handler is registered: invoking it directly must call StopApplication.
-        RaiseCancelKeyPress(lifetime, new ConsoleCancelEventArgs_Wrapper());
-        applicationLifetime.Received(1).StopApplication();
+        RaiseCancelKeyPress(lifetime, new ConsoleCancelEventArgsWrapper());
+        applicationLifetime.StopApplication().WasCalled(Times.Once);
 
         // Act
         lifetime.Dispose();
 
         // Clear the call record so we can check the post-dispose state cleanly.
-        applicationLifetime.ClearReceivedCalls();
+        Mock.Reset(applicationLifetime);
 
         // Invoking the handler after disposal should still work mechanically (the method
         // itself is still callable via reflection), but Dispose must have unhooked it from
@@ -139,7 +139,7 @@ public partial class WindowsFormsLifetimeTests
     /// This is necessary because <see cref="ConsoleCancelEventArgs"/> has no public constructor
     /// and <see cref="Console.CancelKeyPress"/> cannot be raised programmatically.
     /// </summary>
-    private static void RaiseCancelKeyPress(WindowsFormsLifetime lifetime, ConsoleCancelEventArgs_Wrapper args)
+    private static void RaiseCancelKeyPress(WindowsFormsLifetime lifetime, ConsoleCancelEventArgsWrapper args)
     {
         var method = typeof(WindowsFormsLifetime).GetMethod(
             "OnCancelKeyPress",
@@ -153,13 +153,13 @@ public partial class WindowsFormsLifetimeTests
     /// Wrapper that creates a <see cref="ConsoleCancelEventArgs"/> instance via reflection
     /// (its constructor is internal) and exposes the <see cref="Cancel"/> property.
     /// </summary>
-    private sealed class ConsoleCancelEventArgs_Wrapper
+    private sealed class ConsoleCancelEventArgsWrapper
     {
         public ConsoleCancelEventArgs EventArgs { get; }
 
         public bool Cancel => EventArgs.Cancel;
 
-        public ConsoleCancelEventArgs_Wrapper() =>
+        public ConsoleCancelEventArgsWrapper() =>
             EventArgs = (ConsoleCancelEventArgs)
                 System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(ConsoleCancelEventArgs));
     }
