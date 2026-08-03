@@ -2,9 +2,9 @@
 
 using System;
 using System.Windows.Forms;
+using global::TUnit.Mocks;
 using Microsoft.Extensions.Hosting;
 using NetEvolve.Extensions.Hosting.WinForms.Tests.Unit.Internals;
-using NSubstitute;
 
 public partial class IHostBuilderExtensionsTests
 {
@@ -38,7 +38,7 @@ public partial class IHostBuilderExtensionsTests
     [Test]
     public void UseWindowsForms_TApplicationContextTStartForm_IHostBuilderSet_ContextFactoryNull_ThrowArgumentNullException()
     {
-        var builder = Substitute.For<IHostBuilder>();
+        var builder = IHostBuilder.Mock();
 
         _ = Assert.Throws<ArgumentNullException>(
             "contextFactory",
