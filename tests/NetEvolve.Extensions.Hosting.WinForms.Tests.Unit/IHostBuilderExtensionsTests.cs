@@ -52,7 +52,7 @@ public partial class IHostBuilderExtensionsTests
     {
         HostApplicationBuilder builder = null!;
 
-        _ = Assert.Throws<ArgumentNullException>("builder", () => builder!.UseWindowsForms<TestFormFine>());
+        _ = Assert.Throws<ArgumentNullException>("builder", () => builder.UseWindowsForms<TestFormFine>());
     }
 
     [Test]
