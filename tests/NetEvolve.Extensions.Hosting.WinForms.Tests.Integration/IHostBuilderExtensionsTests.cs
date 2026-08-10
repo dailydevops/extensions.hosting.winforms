@@ -2,6 +2,7 @@
 
 using System;
 using System.Drawing;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using global::TUnit.Core.Executors;
@@ -12,31 +13,39 @@ using Microsoft.Extensions.Hosting;
 public partial class IHostBuilderExtensionsTests
 {
     [Test]
-    public async Task UseWindowsForms_IHostBuilder_StartForm_ConfigureNull_Expected()
+    public async Task UseWindowsForms_IHostBuilder_StartForm_ConfigureNull_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var host = Host.CreateDefaultBuilder().UseWindowsForms<TestForm>().Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task UseWindowsForms_IHostBuilder_StartForm_ConfigureFine_Expected()
+    public async Task UseWindowsForms_IHostBuilder_StartForm_ConfigureFine_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var host = Host.CreateDefaultBuilder()
             .UseWindowsForms<TestForm>(options =>
             {
@@ -45,126 +54,146 @@ public partial class IHostBuilderExtensionsTests
             })
             .Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task UseWindowsForms_IHostBuilder_ApplicationContext_Expected()
+    public async Task UseWindowsForms_IHostBuilder_ApplicationContext_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var host = Host.CreateDefaultBuilder().UseWindowsForms<TestApplicationContext>().Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task UseWindowsForms_IHostBuilder_ApplicationContextFactory_Expected()
+    public async Task UseWindowsForms_IHostBuilder_ApplicationContextFactory_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var host = Host.CreateDefaultBuilder()
             .UseWindowsForms(sp => new TestApplicationContext(new TestForm()))
             .Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task UseWindowsForms_IHostBuilder_AdvancedFactory_Expected()
+    public async Task UseWindowsForms_IHostBuilder_AdvancedFactory_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var host = Host.CreateDefaultBuilder()
             .UseWindowsForms<TestApplicationContext, TestForm>((sp, form) => new TestApplicationContext(form))
             .Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
 #if NET7_0_OR_GREATER
     [Test]
-    public async Task UseWindowsForms_HostApplicationBuilder_StartForm_ConfigureNull_Expected()
+    public async Task UseWindowsForms_HostApplicationBuilder_StartForm_ConfigureNull_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var builder = Host.CreateApplicationBuilder();
         _ = builder.UseWindowsForms<TestForm>();
         using var host = builder.Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task UseWindowsForms_HostApplicationBuilder_StartForm_ConfigureFine_Expected()
+    public async Task UseWindowsForms_HostApplicationBuilder_StartForm_ConfigureFine_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var builder = Host.CreateApplicationBuilder();
         _ = builder.UseWindowsForms<TestForm>(options =>
         {
@@ -173,103 +202,119 @@ public partial class IHostBuilderExtensionsTests
         });
         using var host = builder.Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task UseWindowsForms_HostApplicationBuilder_ApplicationContext_Expected()
+    public async Task UseWindowsForms_HostApplicationBuilder_ApplicationContext_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var builder = Host.CreateApplicationBuilder();
         _ = builder.UseWindowsForms<TestApplicationContext>();
         using var host = builder.Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task UseWindowsForms_HostApplicationBuilder_ApplicationContextFactory_Expected()
+    public async Task UseWindowsForms_HostApplicationBuilder_ApplicationContextFactory_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var builder = Host.CreateApplicationBuilder();
         _ = builder.UseWindowsForms(sp => new TestApplicationContext(new TestForm()));
         using var host = builder.Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task UseWindowsForms_HostApplicationBuilder_AdvancedFactory_Expected()
+    public async Task UseWindowsForms_HostApplicationBuilder_AdvancedFactory_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var builder = Host.CreateApplicationBuilder();
         _ = builder.UseWindowsForms<TestApplicationContext, TestForm>((sp, form) => new TestApplicationContext(form));
         using var host = builder.Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 #endif
 
     [Test]
-    public async Task UseWindowsForms_IHostBuilder_StartForm_WithDefaultFont_Expected()
+    public async Task UseWindowsForms_IHostBuilder_StartForm_WithDefaultFont_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var font = new Font("Arial", 10f);
         using var host = Host.CreateDefaultBuilder()
             .UseWindowsForms<TestForm>(options =>
@@ -278,27 +323,31 @@ public partial class IHostBuilderExtensionsTests
             })
             .Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task UseWindowsForms_IHostBuilder_StartForm_WithPreloadAction_Expected()
+    public async Task UseWindowsForms_IHostBuilder_StartForm_WithPreloadAction_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var preloadInvoked = false;
 
         using var host = Host.CreateDefaultBuilder()
@@ -308,29 +357,33 @@ public partial class IHostBuilderExtensionsTests
             })
             .Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
         _ = await Assert.That(preloadInvoked).IsTrue();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
 #if NET7_0_OR_GREATER
     [Test]
-    public async Task UseWindowsForms_HostApplicationBuilder_StartForm_WithDefaultFont_Expected()
+    public async Task UseWindowsForms_HostApplicationBuilder_StartForm_WithDefaultFont_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var font = new Font("Arial", 10f);
         var builder = Host.CreateApplicationBuilder();
         _ = builder.UseWindowsForms<TestForm>(options =>
@@ -339,27 +392,31 @@ public partial class IHostBuilderExtensionsTests
         });
         using var host = builder.Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 
     [Test]
-    public async Task UseWindowsForms_HostApplicationBuilder_StartForm_WithPreloadAction_Expected()
+    public async Task UseWindowsForms_HostApplicationBuilder_StartForm_WithPreloadAction_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var preloadInvoked = false;
 
         var builder = Host.CreateApplicationBuilder();
@@ -369,23 +426,23 @@ public partial class IHostBuilderExtensionsTests
         });
         using var host = builder.Build();
 
-        await host.StartAsync().ConfigureAwait(false);
+        await host.StartAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         var provider = host.Services.GetService<IFormularProvider>()!;
-        var mainForm = await provider.GetMainFormularAsync().ConfigureAwait(false);
+        var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         do
         {
             // This test runs too fast for the handle to be created.
             // Therefore, we have to slow down a little.
-            await Task.Delay(15).ConfigureAwait(false);
+            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
         } while (!mainForm.IsHandleCreated);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
         _ = await Assert.That(preloadInvoked).IsTrue();
 
-        await host.StopAsync().ConfigureAwait(false);
+        await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 #endif
 

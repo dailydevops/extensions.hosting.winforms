@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.Extensions.Hosting.WinForms;
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,8 +23,9 @@ public interface IFormularProvider
     /// Gets the formular of the specified type asynchronously.
     /// </summary>
     /// <typeparam name="T">The specified forms.</typeparam>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The requested form.</returns>
-    ValueTask<T> GetFormularAsync<T>()
+    ValueTask<T> GetFormularAsync<T>(CancellationToken cancellationToken = default)
         where T : Form;
 
     /// <summary>
@@ -35,8 +37,9 @@ public interface IFormularProvider
     /// <summary>
     /// Gets the main formular asynchronously.
     /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The requested form.</returns>
-    ValueTask<Form> GetMainFormularAsync();
+    ValueTask<Form> GetMainFormularAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the scoped formular of the specified type.
@@ -60,8 +63,9 @@ public interface IFormularProvider
     /// Gets the scoped formular of the specified type asynchronously.
     /// </summary>
     /// <typeparam name="T">The specified forms.</typeparam>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The requested form.</returns>
-    ValueTask<T> GetScopedFormAsync<T>()
+    ValueTask<T> GetScopedFormAsync<T>(CancellationToken cancellationToken = default)
         where T : Form;
 
     /// <summary>
@@ -69,8 +73,9 @@ public interface IFormularProvider
     /// </summary>
     /// <typeparam name="T">The specified forms.</typeparam>
     /// <param name="scope">The scope.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <exception cref="ArgumentNullException">Throws a <see cref="ArgumentNullException"/>, if <paramref name="scope"/> is <see langword="null"/>.</exception>
     /// <returns>The requested form.</returns>
-    ValueTask<T> GetScopedFormAsync<T>(IServiceScope scope)
+    ValueTask<T> GetScopedFormAsync<T>(IServiceScope scope, CancellationToken cancellationToken = default)
         where T : Form;
 }

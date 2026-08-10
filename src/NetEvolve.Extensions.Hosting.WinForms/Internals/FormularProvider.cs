@@ -51,14 +51,16 @@ internal sealed class FormularProvider(
     }
 
     /// <inheritdoc />
-    public async ValueTask<T> GetFormularAsync<T>()
+    public async ValueTask<T> GetFormularAsync<T>(CancellationToken cancellationToken = default)
         where T : Form
     {
-        await _semaphore.WaitAsync().ConfigureAwait(false);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        await _semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
             return await synchronizationContext
-                .InvokeAsync(serviceProvider.GetRequiredService<T>)
+                .InvokeAsync(serviceProvider.GetRequiredService<T>, cancellationToken)
                 .ConfigureAwait(false);
         }
         finally
@@ -81,8 +83,10 @@ internal sealed class FormularProvider(
     }
 
     /// <inheritdoc />
-    public ValueTask<Form> GetMainFormularAsync()
+    public ValueTask<Form> GetMainFormularAsync(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var context = serviceProvider.GetRequiredService<ApplicationContext>();
 
         if (context.MainForm is null)
@@ -123,13 +127,17 @@ internal sealed class FormularProvider(
     }
 
     /// <inheritdoc />
-    public async ValueTask<T> GetScopedFormAsync<T>()
+    public async ValueTask<T> GetScopedFormAsync<T>(CancellationToken cancellationToken = default)
         where T : Form
     {
-        await _semaphore.WaitAsync().ConfigureAwait(false);
+        cancellationToken.ThrowIfCancellationRequested();
+
+        await _semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            var form = await synchronizationContext.InvokeAsync(GetScopedForm<T>).ConfigureAwait(false);
+            var form = await synchronizationContext
+                .InvokeAsync(GetScopedForm<T>, cancellationToken)
+                .ConfigureAwait(false);
             return form;
         }
         finally
@@ -139,14 +147,19 @@ internal sealed class FormularProvider(
     }
 
     /// <inheritdoc />
-    public async ValueTask<T> GetScopedFormAsync<T>(IServiceScope scope)
+    public async ValueTask<T> GetScopedFormAsync<T>(IServiceScope scope, CancellationToken cancellationToken = default)
         where T : Form
     {
         ArgumentNullException.ThrowIfNull(scope);
-        await _semaphore.WaitAsync().ConfigureAwait(false);
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        await _semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            var form = await synchronizationContext.InvokeAsync(GetScopedForm<T>, scope).ConfigureAwait(false);
+            var form = await synchronizationContext
+                .InvokeAsync(GetScopedForm<T>, scope, cancellationToken)
+                .ConfigureAwait(false);
             return form;
         }
         finally

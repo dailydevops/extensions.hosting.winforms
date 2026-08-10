@@ -156,7 +156,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
     }
 
     [Test]
-    public async Task InvokeAsync_Action_CancellationTokenCanceled_ThrowsTaskCanceledException()
+    public async Task InvokeAsync_Action_CancellationTokenCanceled_ThrowsOperationCanceledException()
     {
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
@@ -167,21 +167,22 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+        _ = await Assert.ThrowsAsync<OperationCanceledException>(async () =>
             await provider.InvokeAsync(() => { }, new CancellationToken(true)).ConfigureAwait(false)
         );
     }
 
     [Test]
-    public async Task InvokeAsync_Action_Expected()
+    public async Task InvokeAsync_Action_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
-        await provider.InvokeAsync(() => { }).ConfigureAwait(false);
+        await provider.InvokeAsync(() => { }, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         // Assert
         // No exception was thrown.
@@ -228,7 +229,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
     }
 
     [Test]
-    public async Task InvokeAsync_Func_CancellationTokenCanceled_ThrowsTaskCanceledException()
+    public async Task InvokeAsync_Func_CancellationTokenCanceled_ThrowsOperationCanceledException()
     {
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
@@ -239,21 +240,22 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+        _ = await Assert.ThrowsAsync<OperationCanceledException>(async () =>
             await provider.InvokeAsync(() => 42, new CancellationToken(true)).ConfigureAwait(false)
         );
     }
 
     [Test]
-    public async Task InvokeAsync_Func_Expected()
+    public async Task InvokeAsync_Func_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
-        var result = await provider.InvokeAsync(() => 42).ConfigureAwait(false);
+        var result = await provider.InvokeAsync(() => 42, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         // Assert
         _ = await Assert.That(result).IsEqualTo(42);
@@ -300,7 +302,7 @@ public partial class WindowsFormsSynchronizationContextProviderTests
     }
 
     [Test]
-    public async Task InvokeAsync_FuncWithInput_CancellationTokenCanceled_ThrowsTaskCanceledException()
+    public async Task InvokeAsync_FuncWithInput_CancellationTokenCanceled_ThrowsOperationCanceledException()
     {
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
@@ -311,21 +313,24 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         };
 
         // Act
-        _ = await Assert.ThrowsAsync<TaskCanceledException>(async () =>
+        _ = await Assert.ThrowsAsync<OperationCanceledException>(async () =>
             await provider.InvokeAsync(input => input * 2, 21, new CancellationToken(true)).ConfigureAwait(false)
         );
     }
 
     [Test]
-    public async Task InvokeAsync_FuncWithInput_Expected()
+    public async Task InvokeAsync_FuncWithInput_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         // Disable the auto install of the WindowsFormsSynchronizationContext.
         WindowsFormsSynchronizationContext.AutoInstall = false;
         var provider = new WindowsFormsSynchronizationContextProvider { Context = SynchronizationContext.Current! };
 
         // Act
-        var result = await provider.InvokeAsync(input => input * 2, 21).ConfigureAwait(false);
+        var result = await provider
+            .InvokeAsync(input => input * 2, 21, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         // Assert
         _ = await Assert.That(result).IsEqualTo(42);

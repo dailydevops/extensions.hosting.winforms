@@ -27,6 +27,8 @@ internal sealed partial class WindowsFormsLifetime(
     /// <inheritdoc/>
     public Task WaitForStartAsync(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         if (!_options.SuppressStatusMessages)
         {
             _applicationStarted = applicationLifetime.ApplicationStarted.Register(

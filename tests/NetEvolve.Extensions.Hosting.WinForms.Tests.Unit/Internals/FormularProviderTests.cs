@@ -48,8 +48,9 @@ public partial class FormularProviderTests
     }
 
     [Test]
-    public async Task GetFormularAsync_EverythingFine_Expected()
+    public async Task GetFormularAsync_EverythingFine_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         var services = new ServiceCollection().AddScoped<TestFormFine>();
         var serviceProvider = services.BuildServiceProvider();
@@ -60,7 +61,9 @@ public partial class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act
-        using var resultForm = await formularProvider.GetFormularAsync<TestFormFine>().ConfigureAwait(false);
+        using var resultForm = await formularProvider
+            .GetFormularAsync<TestFormFine>(cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         // Assert
         _ = await Assert.That(resultForm).IsNotNull();
@@ -122,8 +125,9 @@ public partial class FormularProviderTests
     }
 
     [Test]
-    public async Task GetScopedFormAsync_EverythingFine_Expected()
+    public async Task GetScopedFormAsync_EverythingFine_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         var services = new ServiceCollection().AddScoped<TestFormFine>();
         var serviceProvider = services.BuildServiceProvider();
@@ -134,7 +138,9 @@ public partial class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act
-        using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>().ConfigureAwait(false);
+        using var resultForm = await formularProvider
+            .GetScopedFormAsync<TestFormFine>(cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         // Assert
         _ = await Assert.That(resultForm).IsNotNull();
@@ -200,8 +206,11 @@ public partial class FormularProviderTests
     }
 
     [Test]
-    public async Task GetScopedFormAsync_WithScope_EverythingFine_Expected()
+    public async Task GetScopedFormAsync_WithScope_EverythingFine_Expected(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         var services = new ServiceCollection().AddScoped<TestFormFine>();
         var serviceProvider = services.BuildServiceProvider();
@@ -213,7 +222,9 @@ public partial class FormularProviderTests
         using var scope = serviceProvider.CreateScope();
 
         // Act
-        using var resultForm = await formularProvider.GetScopedFormAsync<TestFormFine>(scope).ConfigureAwait(false);
+        using var resultForm = await formularProvider
+            .GetScopedFormAsync<TestFormFine>(scope, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         // Assert
         _ = await Assert.That(resultForm).IsNotNull();
@@ -278,8 +289,9 @@ public partial class FormularProviderTests
     }
 
     [Test]
-    public async Task GetMainFormularAsync_EverythingFine_Expected()
+    public async Task GetMainFormularAsync_EverythingFine_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         var services = new ServiceCollection()
             .AddScoped<TestFormFine>()
@@ -292,7 +304,9 @@ public partial class FormularProviderTests
         using var formularProvider = new FormularProvider(serviceProvider, synchronizationContext);
 
         // Act
-        using var resultForm = await formularProvider.GetMainFormularAsync().ConfigureAwait(false);
+        using var resultForm = await formularProvider
+            .GetMainFormularAsync(cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         // Assert
         _ = await Assert.That(resultForm).IsNotNull();
