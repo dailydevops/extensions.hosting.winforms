@@ -1,4 +1,4 @@
-namespace NetEvolve.Extensions.Hosting.WinForms.Tests.Unit.Internals;
+﻿namespace NetEvolve.Extensions.Hosting.WinForms.Tests.Unit.Internals;
 
 using System;
 using System.Threading;
@@ -29,8 +29,11 @@ public partial class WindowsFormsLifetimeTests
     }
 
     [Test]
-    public async Task WaitForStartAsync_EnableConsoleShutdown_False_DoesNotRegisterCancelKeyPress()
+    public async Task WaitForStartAsync_EnableConsoleShutdown_False_DoesNotRegisterCancelKeyPress(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         var options = new WindowsFormsOptions { EnableConsoleShutdown = false };
         using var lifetime = CreateLifetime(options);
@@ -39,7 +42,7 @@ public partial class WindowsFormsLifetimeTests
         ConsoleCancelEventHandler probe = (_, _) => handlerInvoked = true;
 
         // Act
-        await lifetime.WaitForStartAsync(CancellationToken.None).ConfigureAwait(false);
+        await lifetime.WaitForStartAsync(cancellationToken).ConfigureAwait(false);
 
         // Raise a fake CancelKeyPress – the lifetime handler must NOT be triggered
         // because it was never registered.
@@ -58,8 +61,11 @@ public partial class WindowsFormsLifetimeTests
     }
 
     [Test]
-    public async Task WaitForStartAsync_EnableConsoleShutdown_True_CallsStopApplicationOnCancelKeyPress()
+    public async Task WaitForStartAsync_EnableConsoleShutdown_True_CallsStopApplicationOnCancelKeyPress(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         var stopCalled = false;
         var applicationLifetime = IHostApplicationLifetime.Mock();
@@ -73,7 +79,7 @@ public partial class WindowsFormsLifetimeTests
 
         using var lifetime = CreateLifetime(options, applicationLifetime.Object);
 
-        await lifetime.WaitForStartAsync(CancellationToken.None).ConfigureAwait(false);
+        await lifetime.WaitForStartAsync(cancellationToken).ConfigureAwait(false);
 
         // Act – simulate the Console.CancelKeyPress event by invoking the handler
         // directly via reflection (the method is private but testable through the event).
@@ -86,8 +92,11 @@ public partial class WindowsFormsLifetimeTests
     }
 
     [Test]
-    public async Task Dispose_EnableConsoleShutdown_True_UnregistersHandler()
+    public async Task Dispose_EnableConsoleShutdown_True_UnregistersHandler(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         var applicationLifetime = IHostApplicationLifetime.Mock();
         _ = applicationLifetime.ApplicationStarted.Returns(CancellationToken.None);
@@ -97,7 +106,7 @@ public partial class WindowsFormsLifetimeTests
 
         var lifetime = CreateLifetime(options, applicationLifetime.Object);
 
-        await lifetime.WaitForStartAsync(CancellationToken.None).ConfigureAwait(false);
+        await lifetime.WaitForStartAsync(cancellationToken).ConfigureAwait(false);
 
         // Verify the handler is registered: invoking it directly must call StopApplication.
         RaiseCancelKeyPress(lifetime, new ConsoleCancelEventArgsWrapper());
@@ -121,13 +130,14 @@ public partial class WindowsFormsLifetimeTests
     }
 
     [Test]
-    public async Task Dispose_EnableConsoleShutdown_False_DoesNotThrow()
+    public async Task Dispose_EnableConsoleShutdown_False_DoesNotThrow(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         var options = new WindowsFormsOptions { EnableConsoleShutdown = false };
         using var lifetime = CreateLifetime(options);
 
-        await lifetime.WaitForStartAsync(CancellationToken.None).ConfigureAwait(false);
+        await lifetime.WaitForStartAsync(cancellationToken).ConfigureAwait(false);
 
         // Act / Assert – no exception expected
         lifetime.Dispose();

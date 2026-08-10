@@ -21,6 +21,8 @@ internal sealed class WindowsFormsHostedService(
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         _cancellationTokenRegistration = applicationLifetime.ApplicationStopping.Register(
             state =>
             {

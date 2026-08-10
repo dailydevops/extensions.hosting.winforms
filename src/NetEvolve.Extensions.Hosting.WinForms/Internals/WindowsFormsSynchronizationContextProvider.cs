@@ -86,6 +86,8 @@ internal sealed class WindowsFormsSynchronizationContextProvider : IWindowsForms
             throw new InvalidOperationException("The synchronization context is not set.");
         }
 
+        cancellationToken.ThrowIfCancellationRequested();
+
         var tcs = new TaskCompletionSource();
         Context.Post(
             delegate
@@ -118,6 +120,8 @@ internal sealed class WindowsFormsSynchronizationContextProvider : IWindowsForms
         {
             throw new InvalidOperationException("The synchronization context is not set.");
         }
+
+        cancellationToken.ThrowIfCancellationRequested();
 
         var tcs = new TaskCompletionSource<TResult>();
         Context.Post(
@@ -152,6 +156,8 @@ internal sealed class WindowsFormsSynchronizationContextProvider : IWindowsForms
         {
             throw new InvalidOperationException("The synchronization context is not set.");
         }
+
+        cancellationToken.ThrowIfCancellationRequested();
 
         var tcs = new TaskCompletionSource<TResult>();
         Context.Post(
