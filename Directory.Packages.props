@@ -26,8 +26,8 @@
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.9.0" />
     <PackageVersion Include="NetEvolve.Extensions.TUnit" Version="3.5.348" />
     <PackageVersion Include="TngTech.ArchUnitNET.TUnit" Version="0.13.3" />
-    <PackageVersion Include="TUnit" Version="1.64.0" />
-    <PackageVersion Include="TUnit.Mocks" Version="1.64.0" />
+    <PackageVersion Include="TUnit" Version="1.64.6" />
+    <PackageVersion Include="TUnit.Mocks" Version="1.64.6" />
     <PackageVersion Include="Verify.TUnit" Version="31.28.0" />
   </ItemGroup>
 </Project>
