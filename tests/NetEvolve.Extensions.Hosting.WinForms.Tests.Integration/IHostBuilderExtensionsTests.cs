@@ -397,12 +397,7 @@ public partial class IHostBuilderExtensionsTests
         var provider = host.Services.GetService<IFormularProvider>()!;
         var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
-        do
-        {
-            // This test runs too fast for the handle to be created.
-            // Therefore, we have to slow down a little.
-            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
-        } while (!mainForm.IsHandleCreated);
+        await WaitForHandleCreatedAsync(mainForm, cancellationToken).ConfigureAwait(false);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
@@ -431,12 +426,7 @@ public partial class IHostBuilderExtensionsTests
         var provider = host.Services.GetService<IFormularProvider>()!;
         var mainForm = await provider.GetMainFormularAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
-        do
-        {
-            // This test runs too fast for the handle to be created.
-            // Therefore, we have to slow down a little.
-            await Task.Delay(15, cancellationToken: cancellationToken).ConfigureAwait(false);
-        } while (!mainForm.IsHandleCreated);
+        await WaitForHandleCreatedAsync(mainForm, cancellationToken).ConfigureAwait(false);
 
         _ = await Assert.That(mainForm).IsNotNull();
         _ = await Assert.That(mainForm).IsTypeOf<TestForm>();
@@ -445,6 +435,64 @@ public partial class IHostBuilderExtensionsTests
         await host.StopAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 #endif
+
+    /// <summary>
+    /// Waits until <paramref name="form"/>'s window handle has been created by the WinForms UI thread.
+    /// Polling <see cref="Control.IsHandleCreated"/> directly from another thread is racy: the property
+    /// can observe the handle as created while <c>Control.CreateHandle()</c> is still on the stack (its
+    /// internal "creating handle" guard is only cleared once <c>CreateHandle()</c> returns), so code that
+    /// reacts immediately - e.g. disposing the host - can hit
+    /// "InvalidOperationException: Value Dispose() cannot be called while doing CreateHandle()", as seen
+    /// on this repository's Windows CI runner. Waiting on <see cref="Control.HandleCreated"/> with a
+    /// continuation that always resumes asynchronously (a thread-pool hop) lets that call stack unwind
+    /// before the awaiting test continues, and a bounded timeout turns a stalled UI thread into a clear,
+    /// fast failure instead of the test runner's default 5-minute timeout.
+    /// </summary>
+    private static async Task WaitForHandleCreatedAsync(
+        Form form,
+        CancellationToken cancellationToken,
+        int timeoutSeconds = 30
+    )
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        if (form.IsHandleCreated)
+        {
+            return;
+        }
+
+        var handleCreated = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        void OnHandleCreated(object? sender, EventArgs e) => handleCreated.TrySetResult(true);
+
+        form.HandleCreated += OnHandleCreated;
+        try
+        {
+            // Re-check after subscribing, in case the handle was created between the first check and now.
+            if (form.IsHandleCreated)
+            {
+                return;
+            }
+
+            using var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutSeconds));
+            using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
+            using var registration = linkedCts.Token.Register(() => handleCreated.TrySetCanceled(linkedCts.Token));
+
+            try
+            {
+                _ = await handleCreated.Task.ConfigureAwait(false);
+            }
+            catch (OperationCanceledException) when (timeoutCts.IsCancellationRequested)
+            {
+                throw new TimeoutException(
+                    $"The handle for form '{form.GetType().Name}' was not created within {timeoutSeconds} seconds."
+                );
+            }
+        }
+        finally
+        {
+            form.HandleCreated -= OnHandleCreated;
+        }
+    }
 
 #pragma warning disable CA1812
     private sealed class TestApplicationContext : ApplicationContext
