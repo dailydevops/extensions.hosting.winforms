@@ -8,9 +8,8 @@ public partial class IServiceCollectionExtensionsTests
 {
     [Test]
     public void AddWindowsFormsLifetime_ServicesNull_ThrowArgumentNullException() =>
-        _ = Assert.Throws<ArgumentNullException>(
-            "services",
-            () => IServiceCollectionExtensions.AddWindowsFormsLifetime(null!, null)
+        _ = Assert.Throws<ArgumentNullException>("services", () =>
+            IServiceCollectionExtensions.AddWindowsFormsLifetime(null!, null)
         );
 
     [Test]

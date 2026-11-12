@@ -29,9 +29,8 @@ public partial class IHostBuilderExtensionsTests
     {
         IHostBuilder builder = null!;
 
-        _ = Assert.Throws<ArgumentNullException>(
-            "builder",
-            () => builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
+        _ = Assert.Throws<ArgumentNullException>("builder", () =>
+            builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
     }
 
@@ -40,9 +39,8 @@ public partial class IHostBuilderExtensionsTests
     {
         var builder = IHostBuilder.Mock();
 
-        _ = Assert.Throws<ArgumentNullException>(
-            "contextFactory",
-            () => builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
+        _ = Assert.Throws<ArgumentNullException>("contextFactory", () =>
+            builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
     }
 
@@ -68,9 +66,8 @@ public partial class IHostBuilderExtensionsTests
     {
         HostApplicationBuilder builder = null!;
 
-        _ = Assert.Throws<ArgumentNullException>(
-            "builder",
-            () => builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
+        _ = Assert.Throws<ArgumentNullException>("builder", () =>
+            builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
     }
 
@@ -79,9 +76,8 @@ public partial class IHostBuilderExtensionsTests
     {
         var builder = new HostApplicationBuilder();
 
-        _ = Assert.Throws<ArgumentNullException>(
-            "contextFactory",
-            () => builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
+        _ = Assert.Throws<ArgumentNullException>("contextFactory", () =>
+            builder.UseWindowsForms<TestApplicatonContext, TestFormFine>(null!)
         );
     }
 #endif
