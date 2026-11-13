@@ -123,9 +123,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = Assert.ThrowsAsync<ArgumentNullException>(
-            "action",
-            async () => await provider.InvokeAsync(null!).ConfigureAwait(false)
+        _ = Assert.ThrowsAsync<ArgumentNullException>("action", async () =>
+            await provider.InvokeAsync(null!).ConfigureAwait(false)
         );
     }
 
@@ -136,9 +135,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = Assert.ThrowsAsync<ArgumentNullException>(
-            "Context",
-            async () => await provider.InvokeAsync(() => { }).ConfigureAwait(false)
+        _ = Assert.ThrowsAsync<ArgumentNullException>("Context", async () =>
+            await provider.InvokeAsync(() => { }).ConfigureAwait(false)
         );
     }
 
@@ -195,9 +193,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = Assert.ThrowsAsync<ArgumentNullException>(
-            "action",
-            async () => await provider.InvokeAsync((Func<int>)null!).ConfigureAwait(false)
+        _ = Assert.ThrowsAsync<ArgumentNullException>("action", async () =>
+            await provider.InvokeAsync((Func<int>)null!).ConfigureAwait(false)
         );
     }
 
@@ -208,9 +205,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = Assert.ThrowsAsync<ArgumentNullException>(
-            "Context",
-            async () => await provider.InvokeAsync(() => 42).ConfigureAwait(false)
+        _ = Assert.ThrowsAsync<ArgumentNullException>("Context", async () =>
+            await provider.InvokeAsync(() => 42).ConfigureAwait(false)
         );
     }
 
@@ -268,9 +264,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = Assert.ThrowsAsync<ArgumentNullException>(
-            "action",
-            async () => await provider.InvokeAsync((Func<int, int>)null!, 42).ConfigureAwait(false)
+        _ = Assert.ThrowsAsync<ArgumentNullException>("action", async () =>
+            await provider.InvokeAsync((Func<int, int>)null!, 42).ConfigureAwait(false)
         );
     }
 
@@ -281,9 +276,8 @@ public partial class WindowsFormsSynchronizationContextProviderTests
         var provider = new WindowsFormsSynchronizationContextProvider();
 
         // Act / Assert
-        _ = Assert.ThrowsAsync<ArgumentNullException>(
-            "Context",
-            async () => await provider.InvokeAsync(input => input * 2, 21).ConfigureAwait(false)
+        _ = Assert.ThrowsAsync<ArgumentNullException>("Context", async () =>
+            await provider.InvokeAsync(input => input * 2, 21).ConfigureAwait(false)
         );
     }
 
